@@ -33,10 +33,10 @@
             </li>
           </ul>
            <li class="nav-item">
-              <router-link class="nav-link" to="/account">Account</router-link>
+              <router-link class="nav-link" to="/account"><i class="fa-solid fa-user" style="color: #da15f4;"></i></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/cart">Cart</router-link>
+              <router-link class="nav-link" to="/cart"><i class="fa-solid fa-cart-shopping" style="color: #d537d7;"></i></router-link>
             </li>
         </div>
       </div>

@@ -121,4 +121,26 @@ textarea {
   outline: none;
   padding: 10px;
 }
+@media (max-width: 768px) {
+.container {
+width: 100%;
+}
+.contact-box {
+display: block;
+}
+.contact-left {
+flex-basis: 100%;
+padding: 40px 20px;
+}
+.contact-right {
+flex-basis: 100%;
+padding: 40px 20px;
+}
+.input-row {
+display: block;
+}
+.input-row .input-group {
+flex-basis: 100%;
+}
+}
 </style>
