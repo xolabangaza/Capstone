@@ -1,13 +1,9 @@
-<template >
-    <div>
-        
-    </div>
+<template>
+    <ContactComp/>
 </template>
 <script>
+import ContactComp from '@/components/Contact.vue' 
 export default {
-    
+    components: {ContactComp}
 }
 </script>
-<style scoped>
-    
-</style>

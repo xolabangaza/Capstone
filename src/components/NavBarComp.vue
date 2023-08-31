@@ -33,10 +33,10 @@
             </li>
           </ul>
            <li class="nav-item">
-              <router-link class="nav-link" to="/contact">Account</router-link>
+              <router-link class="nav-link" to="/account">Account</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/contact">Cart</router-link>
+              <router-link class="nav-link" to="/cart">Cart</router-link>
             </li>
         </div>
       </div>
@@ -69,7 +69,7 @@ export default {};
 
 .navbar-brand {
   color: white;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 400;
   font-style: italic;
 }
