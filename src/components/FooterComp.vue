@@ -82,16 +82,16 @@
             Useful links
           </h6>
           <p>
-            <a href="#!" class="text-reset">Home</a>
+            <router-link to="/">Home</router-link>
           </p>
           <p>
-            <a href="#!" class="text-reset">Shop</a>
+           <router-link to="/products">Shop</router-link>
           </p>
           <p>
-            <a href="#!" class="text-reset">Account</a>
+            <router-link to="/account">Account</router-link>
           </p>
           <p>
-            <a href="#!" class="text-reset">Cart</a>
+            <router-link to="/cart">Cart</router-link>
           </p>
         </div>
         <!-- Grid column -->
@@ -100,10 +100,10 @@
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-          <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-home me-3"></i> Online</p>
           <p>
             <i class="fas fa-envelope me-3"></i>
-            info@example.com
+             info@sportwearflex.com
           </p>
           <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
           <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
@@ -136,6 +136,9 @@ footer{
   color: white;
 }
 a.text-reset{
+  text-decoration: none;
+}
+router-link {
   text-decoration: none;
 }
     

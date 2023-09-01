@@ -70,13 +70,14 @@ export default {};
 .contact-right {
   flex-basis: 60%;
   padding: 40px 60px;
-  background: rgb(227, 148, 226);
+  background: rgb(206, 112, 204);
   color: #fff;
   border: 2px solid;
   border-radius: 16px;
 }
 button{
     width: 80px;
+    border: 1px solid pink;
     border-radius: 6px;
     background: transparent;
 }
@@ -110,14 +111,14 @@ h3 {
 input {
   width: 100%;
   border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid pink;
     outline: none;
     
 }
 textarea {
   width: 100%;
-  border: 2px solid #ccc;
-  border-radius: 6px;
+  border: 2px solid pink;
+  border-radius: 8px;
   outline: none;
   padding: 10px;
 }

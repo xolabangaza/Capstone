@@ -1,9 +1,9 @@
 <template>
-    <Login/>
+    <AccountComp/>
 </template>
 <script>
-import ContactComp from '@/components/Contact.vue' 
+import AccountComp from '@/components/Account.vue' 
 export default {
-    components: {ContactComp}
+    components: {AccountComp}
 }
 </script>

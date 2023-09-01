@@ -2,7 +2,7 @@
   <div class="about-page">
     <div class="container">
       <h1 class="text-center fs-1">About Us</h1>
-      <p class="text-center">Welcome to SportWearFlex, your one-stop shop for high-quality tennis clothes!<br> <span> name is Xola Bangaza,</span>  and I'm passionate about providing tennis enthusiasts<br>  with comfortable and stylish apparel to elevate their game.
+      <p class="text-center">Welcome to SportWearFlex, your one-stop shop for high-quality tennis clothes!<br>  We passionate about providing tennis enthusiasts<br>  with comfortable and stylish apparel to elevate their game.
       At SportWearFlex,<br>  we understand that clothing plays a crucial role in enhancing your performance <br> on the court. That's why we curate a diverse collection of tennis clothes that blend <br> functionality, comfort, and style.
       Whether you're a professional player or a casual <br> tennis enthusiast, our range of products includes everything you need: from breathable <br> shirts and skirts to supportive sneakers and accessories.
       Our mission is to help you feel<br>  confident and perform your best on the court. We believe that the right attire can make<br>  a significant difference in your game, and that's what drives us to bring you the best tennis <br> clothing options.
@@ -31,10 +31,6 @@ export default {
 </script>
 
 <style scoped>
-span{
-  background-color: #f4daf0;
-  
-}
 .container{
     color: rgba(216, 45, 209, 1);
     font-family: 'Courier New', Courier, monospace;
@@ -56,9 +52,9 @@ span{
 }
 
 .founder-image {
-  flex: 1;
-  max-width: 500px;
+  max-width: 400px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .founder-image img {
@@ -69,6 +65,7 @@ span{
 .founder-text {
   flex: 2;
   text-align: left;
+  margin-bottom: 80px;
   
 }
 
