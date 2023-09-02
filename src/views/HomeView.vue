@@ -34,7 +34,7 @@
         />
         <div class="ptag pt-4 text-center">
           <h3>Serena Williams</h3>
-          <p class="primary">Our Serena Williams Signature Collection is <br>inspired by the one and only Serena Williams,<br> a true icon of the sport. We've worked closely<br> with Serena to create a line that embodies he<br> unparalleled passion, power, and style.</p><br />
+          <p class="primary">Our Serena Williams Signature Collection is <br>inspired by the one and only Serena Williams,<br> a true icon of the sport. We've worked closely<br> with Serena to create a line that embodies her<br> unparalleled passion, power, and style.</p><br />
           <router-link to="/products" class="desc-button mt-2">Nike</router-link>
         </div>
       </div>
