@@ -75,5 +75,10 @@ export default {
   margin-bottom: 0;
   color: rgba(216, 45, 209, 1);
 }
+@media (max-width: 768px) {
+  .founder-info{
+    flex-direction: column !important ;
+  }
+}
 
 </style>

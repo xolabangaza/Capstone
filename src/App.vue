@@ -23,6 +23,7 @@ export default {
   color: #2C3E50; */
   /* background-color:rgba(15, 16, 51, 1); */
   background-color:rgba(15, 16, 51, 1);
+  overflow: hidden;
 
 }
 /* nav {

@@ -277,5 +277,12 @@ h3{
 h1{
   font-size: 10px;
 }
+.heading{
+  font-size: 30px;
+}
+.hero-content h1{
+  font-size: 30px;
+}
+
 }
 </style>

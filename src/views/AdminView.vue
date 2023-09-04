@@ -1,6 +1,8 @@
-AdminView.vue
 <template>
   <div>
+    <div class="text-center">
+       <users-list></users-list> 
+    </div>
     <div class="text-center">
       <h3 class="text-center">Add Products</h3>
       <input
@@ -22,7 +24,7 @@ AdminView.vue
       <br />
       <button class="button" @click="submit()">Submit</button>
     </div>
-      <h2>Users</h2>
+    <h2>Users</h2>
     <table class="table">
       <thead>
         <tr>
@@ -30,24 +32,23 @@ AdminView.vue
           <th>Name</th>
           <th>Gender</th>
           <th>Date of Birth</th>
-         <th>Email</th>
-         <th>Password</th>
-        
-
-          </tr>
+          <th>Email</th>
+          <th>Password</th>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
           <td>{{ user.userID }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
-          <td>{{ user.gender}}</td>
-          <td>{{ user.userDOB}}</td>
-          <td>{{ user.emailAdd}}</td>
-          <td>{{ user.userPass}}</td>
-          <td>{{ user.userRole}}</td>
-          <td><img src="{{ user.userProfile}} " alt="{{ user.firstName }}"></td>
-          <!-- Add more columns as needed -->
+          <td>{{ user.gender }}</td>
+          <td>{{ user.userDOB }}</td>
+          <td>{{ user.emailAdd }}</td>
+          <td>{{ user.userPass }}</td>
+          <td>{{ user.userRole }}</td>
+          <td>
+            <img src="{{ user.userProfile}} " alt="{{ user.firstName }}" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -168,16 +169,17 @@ AdminView.vue
 <script>
 import axios from "axios";
 import SingleUpdateProductModal from "../components/Update-Product.vue";
+import UsersList from "@/components/UsersList.vue";
 export default {
-  components: { SingleUpdateProductModal },
+  components: { SingleUpdateProductModal,  UsersList },
   computed: {
-    myProjects() {
-      return this.$store.state.myProjects;
+    getProducts() {
+      return this.$store.state.products;
     },
   },
   mounted() {
-     this.fetchUsers();
-    this.$store.dispatch("getmyProjects");
+    this.fetchUsers();
+    this.$store.dispatch("getProducts");
   },
   name: "",
   props: {},
@@ -190,14 +192,22 @@ export default {
         productUrl: "",
         category: "",
       },
-        users: [],
+      users: [],
     };
   },
   methods: {
+     async fetchUsers() {
+      try {
+        const response = await axios.get("http://localhost:5000/users");
+        this.users = response.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    },
     async fetchProducts() {
       try {
         axios
-          .get("https://fullstackeomp-0asf.onrender.com/products/:id")
+          .get("http://localhost:5000/products/:id")
           .then(function (response) {
             const products = response.data;
             const table = document.getElementById("productTable");
@@ -215,46 +225,42 @@ export default {
             console.error("Error fetching products:", error);
           });
 
-        const response = await axios.get(
-          "https://fullstackeomp-0asf.onrender.com/products"
-        );
+        const response = await axios.get("http://localhost:5000/products");
         this.products = response.data;
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     },
-      async fetchUsers() {
+    async fetchUsers() {
       try {
-        const response = await axios.get(
-          "https://fullstackeomp-0asf.onrender.com/users"
-        );
+        const response = await axios.get("http://localhost:5000/users");
         this.users = response.data;
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     },
 
-   async editProduct() {
-  try {
-    const editedProduct = {
-      productName: this.form.productName,
-      productPrice: this.form.productPrice,
-      productStock: this.form.productStock,
-      productUrl: this.form.productUrl,
-      category: this.form.category,
-    };
-    const response = await axios.patch(
-      `https://fullstackeomp-0asf.onrender.com/products/${this.form.productID}`,
-      editedProduct
-    );
-    alert("Product updated successfully");
-    this.$store.dispatch("getmyProjects");
-    this.resetForm();
-    $("#exampleModal").modal("hide");
-  } catch (error) {
-    console.error("Error editing product:", error);
-  }
-},
+    async editProduct() {
+      try {
+        const editedProduct = {
+          productName: this.form.productName,
+          productPrice: this.form.productPrice,
+          productStock: this.form.productStock,
+          productUrl: this.form.productUrl,
+          category: this.form.category,
+        };
+        const response = await axios.patch(
+          `http://localhost:5000/products/${this.form.productID}`,
+          editedProduct
+        );
+        alert("Product updated successfully");
+        this.$store.dispatch("getmyProjects");
+        this.resetForm();
+        $("#exampleModal").modal("hide");
+      } catch (error) {
+        console.error("Error editing product:", error);
+      }
+    },
     resetForm() {
       this.form.productName = "";
       this.form.productPrice = "";
@@ -272,7 +278,7 @@ export default {
     async deleteProduct(productID) {
       try {
         const response = await axios.delete(
-          `https://fullstackeomp-0asf.onrender.com/products/${productID}`
+          `http://localhost:5000/products/${productID}`
         );
         alert("Product deleted successfully");
         this.$store.dispatch("getmyProjects");
@@ -292,7 +298,7 @@ export default {
         category: this.form.category,
       };
       const response = await axios.patch(
-        `https://fullstackeomp-0asf.onrender.com/products/${this.form.productID}`,
+        `http://localhost:5000/products/${this.form.productID}`,
         editedProduct
       );
       alert("Product updated successfully");
@@ -307,7 +313,7 @@ export default {
 <style scoped>
 .just {
   margin: auto;
-  color: rgb(216, 37, 126) ;
+  color: rgb(216, 37, 126);
 }
 img {
   width: 100px;
@@ -324,7 +330,7 @@ label {
   margin-top: 10px;
   color: rgb(226, 43, 134);
 }
-h3{
+h3 {
   color: brown;
 }
 input {
@@ -362,7 +368,7 @@ button:hover {
   background-color: purple;
 }
 h2 {
-  color: #0056B3;
+  color: #0056b3;
   text-align: center;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -416,12 +422,12 @@ td {
     width: 70px;
     height: 80px;
   }
-  button{
+  button {
     display: flex;
     flex-direction: column;
     width: 80px;
   }
-  thead{
+  thead {
     display: none;
   }
 }

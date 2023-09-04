@@ -1,28 +1,48 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-const dbConnection = "https://fullstackeomp-0asf.onrender.com";
+const dbConnection = "http://localhost:5000";
 export default createStore({
   state: {
-    myProjects: null,
-    myProduct: null,
+    products: null,
+    product: null,
     myAdmins: null,
+    users: null,
   },
   mutations: {
-    setmyProjects: (state, myProjects) => {
-      state.myProjects = myProjects;
+    setProducts: (state, products) => {
+      state.products = products;
     },
-    setmyProduct: (state, myProduct) => {
-      state.myProduct = myProduct;
+    setProduct: (state, product) => {
+      state.product = product;
     },
-    setmyAdmins: (state, myAdmins) => {
+    setMyAdmins: (state, myAdmins) => {
       state.myAdmins = myAdmins;
     },
+    setUsers: (state, users) => {
+      state.users = users;
+    },    
   },
   actions: {
-    async getmyProjects(context) {
+    async getProducts(context) {
       try {
         const response = await axios.get(`${dbConnection}/products`);
-        context.commit("setmyProjects", response.data);
+        context.commit("setProducts", response.data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    },
+    async getProduct(context, prodID) { // Add prodID as an argument
+      try {
+        const response = await axios.get(`${dbConnection}/products/${prodID}`);
+        context.commit("setProduct", response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    },
+    async getUsers(context) {
+      try {
+        const response = await axios.get(`${dbConnection}/users`);
+        context.commit("setUsers", response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
