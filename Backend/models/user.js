@@ -6,7 +6,7 @@ class Users {
     const query = `
         SELECT userID, firstName, lastName,
         gender, userDOB, userRole, emailAdd,
-        profileUrl
+        userPass, profileUrl
         FROM Users;
         `;
     db.query(query, (err, results) => {
