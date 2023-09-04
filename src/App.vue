@@ -5,10 +5,6 @@
 <FooterComp/>
 </div>
 
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
   
 </template>
 <script>
@@ -27,7 +23,7 @@ export default {
   color: #2C3E50; */
   /* background-color:rgba(15, 16, 51, 1); */
   background-color:rgba(15, 16, 51, 1);
-  overflow: hidden;
+
 }
 /* nav {
   padding: 30px;
