@@ -28,10 +28,11 @@ export default createStore({
         const response = await axios.get(`${dbConnection}/products`);
         context.commit("setProducts", response.data);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error("Error fetching products:", error);
       }
     },
-    async getProduct(context, prodID) { // Add prodID as an argument
+    
+    async getProduct(context, prodID) { 
       try {
         const response = await axios.get(`${dbConnection}/products/${prodID}`);
         context.commit("setProduct", response.data);

@@ -56,5 +56,7 @@ mounted() {
 </script>
 
 <style scoped>
-/* Add your component-specific styles here */
+h2{
+  color: rgb(129, 31, 80);
+}
 </style>

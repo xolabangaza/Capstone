@@ -1,7 +1,5 @@
 <template>
   <div>
-
-
     <table>
       <tr>
         <th>Product Name</th>
