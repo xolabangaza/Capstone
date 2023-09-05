@@ -24,7 +24,7 @@
       <br />
       <button class="button" @click="submit()">Submit</button>
     </div>
-    <h2>Users</h2>
+    <!-- <h2>Users</h2>
     <table class="table">
       <thead>
         <tr>
@@ -51,7 +51,7 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
     <table class="table">
       <thead>
         <tr>
