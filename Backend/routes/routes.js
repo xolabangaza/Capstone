@@ -48,7 +48,7 @@ router.get("/products/:id", showProductById);
 // Create New Product
 router.post("/products", createProduct);
 // Update Product
-router.put("/products/:id", updateProduct);
+router.patch("/products/:id", updateProduct);
 // Delete Product
 router.delete("/products/:id", deleteProduct);
 // export default router
