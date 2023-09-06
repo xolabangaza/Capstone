@@ -2,13 +2,13 @@
     <div>
       <div v-if="product" class="product-detail row px-5 py-4">
         <div class="product-image col-12 col-sm-6 col-md-6">
-          <img :src="product.productUrl" :alt="product.productName" />
+          <img :src="product.prodImg" :alt="product.prodName" />
         </div>
         <div class="product-info col-12 col-sm-6 col-md-6 mt-5">
-          <h3>{{ product.productName }}</h3>
-          <h4>Price: {{ product.productPrice }}</h4>
-          <h5>Q: {{ product.productStock }}</h5>
-          <h5>Category: {{ product.category }}</h5>
+          <h3>{{ product.prodName }}</h3>
+          <h4>Price: {{ product.prodPrice }}</h4>
+          <h5>T: {{ product.prodType }}</h5>
+          <h5>Category: {{ product.prodCat }}</h5>
           <div>   
             <p>Size: M</p>
             <p>Quantity: 4</p>
@@ -25,17 +25,17 @@
   export default {
     name: "SingleProductView",
     computed: {
-      ...mapState(["myProduct"]),
+      ...mapState(["Product"]),
       product() {
-        return this.myProduct;
+        return this.Product;
       },
     },
     methods: {
       ...mapActions(["fetchProductDetails"]),
       async fetchProduct() {
         try {
-          const productID = this.$route.params.productID;
-          await this.fetchProductDetails(productID);
+          const prodID = this.$route.params.prodID;
+          await this.fetchProductDetails(prodID);
         } catch (error) {
           console.error("Error fetching product details:", error);
         }

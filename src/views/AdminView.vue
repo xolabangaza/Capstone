@@ -10,17 +10,19 @@
         v-model="form.productID"
         style="visibility: hidden; display: none"
       />
-      <label>Product Name</label>
-      <input class="just" type="text" v-model="form.productName" />
       <label>Product Price</label>
-      <input class="just" type="number" v-model="form.productPrice" />
-      <label>Product Stock</label>
-      <input class="just" type="number" v-model="form.productStock" />
-      <label>Product Url</label>
-      <input class="just" type="text" v-model="form.productUrl" />
+      <input class="just" type="number" v-model="form.prodPrice" />
+      <label>Product Name</label>
+      <input class="just" type="text" v-model="form.prodName" />
+      <label>Product Desc</label>
+      <input class="just" type="text" v-model="form.prodDesc" />
       <label>Product Category</label>
       <!-- Fixed typo in label -->
-      <input class="just" type="text" v-model="form.category" />
+      <input class="just" type="text" v-model="form.prodCat" />
+      <label>Product Type</label>
+      <input class="just" type="text" v-model="form.prodType" />
+      <label>Product Url</label>
+      <input class="just" type="text" v-model="form.prodImg" />
       <br />
       <button class="button" @click="submit()">Submit</button>
     </div>
@@ -55,31 +57,33 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Product Name</th>
           <th>Product Price</th>
-          <th>Product Stock</th>
-          <th>Product URL</th>
+          <th>Product Name</th>
+          <th>Product Desc</th>
           <th>Category</th>
+          <th>Product Type</th>
+          <th>Product URL</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="project in myProjects" :key="project.projectID">
-          <td>{{ project.productName }}</td>
-          <td>{{ project.productPrice }}</td>
-          <td>{{ project.productStock }}</td>
-          <td><img :src="project.productUrl" :alt="project.productName" /></td>
-          <td>{{ project.category }}</td>
+        <tr v-for="product in Products" :key="product.productID">
+          <td>{{ product.prodPrice }}</td>
+          <td>{{ product.prodName }}</td>
+          <td>{{ product.prodDesc }}</td>
+          <td>{{ product.prodCat }}</td>
+          <td>{{ product.prodType }}</td>
+          <td><img :src="product.prodImg" :alt="product.prodName" /></td>
           <td>
-            <!-- <button>
+            <button>
       <SingleUpdateProductModal :form="form" @update-product="editProduct()" />
-        </button> -->
+        </button> 
             <button
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              @click="populateForm(project)"
+              @click="populateForm(product)"
             >
               Edit
             </button>
@@ -104,36 +108,43 @@
                       aria-label="Close"
                     ></button>
                   </div>
+                    <label>Product Price</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      v-model="form.prodPrice"
+                    />
                   <div class="modal-body">
                     <label>Product Name</label>
                     <input
                       class="form-control"
                       type="text"
-                      v-model="form.productName"
+                      v-model="form.prodName"
                     />
-                    <label>Product Price</label>
+                    
+                    <label>Product Cat</label>
                     <input
                       class="form-control"
                       type="number"
-                      v-model="form.productPrice"
+                      v-model="form.prodCat"
                     />
-                    <label>Product Stock</label>
+                    <label>Product Type</label>
                     <input
                       class="form-control"
                       type="number"
-                      v-model="form.productStock"
+                      v-model="form.prodType"
                     />
                     <label>Product Url</label>
                     <input
                       class="form-control"
                       type="text"
-                      v-model="form.productUrl"
+                      v-model="form.prodImg"
                     />
                     <label>Product Category</label>
                     <input
                       class="form-control"
                       type="text"
-                      v-model="form.category"
+                      v-model="form.prodCat"
                     />
                   </div>
                   <div class="modal-footer">
@@ -155,13 +166,13 @@
                 </div>
               </div>
             </div>
-            <button @click="deleteProduct(project.productID)">Delete</button>
+            <button @click="deleteProduct(product.prodID)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
     <div>
-      <div v-if="myProjects" class="row p-4"></div>
+      <div v-if="Products" class="row p-4"></div>
       <div v-else>Processing...</div>
     </div>
   </div>
@@ -186,11 +197,13 @@ export default {
   data() {
     return {
       form: {
-        productName: "",
-        productPrice: "",
-        productStock: "",
-        productUrl: "",
-        category: "",
+        prodPrice: "",
+        prodName: "",
+        prodDesc: "",
+        prodCat: "",
+        prodType: "",
+        prodImg: "",
+        
       },
       users: [],
     };
@@ -213,12 +226,13 @@ export default {
             const table = document.getElementById("productTable");
             products.forEach(function (product) {
               const row = table.insertRow();
-              row.insertCell(1).textContent = product.productName;
+              row.insertCell(1).textContent = product.prodName;
               row.insertCell(2).textContent =
-                "$" + product.productPrice.toFixed(2);
-              row.insertCell(3).textContent = product.productStock;
-              row.insertCell(4).textContent = product.productUrl;
-              row.insertCell(5).textContent = product.category;
+                "$" + product.prodPrice.toFixed(2);
+              row.insertCell(3).textContent = product.prodDesc;
+              row.insertCell(4).textContent = product.prodCat;
+              row.insertCell(5).textContent = product.prodType;
+              row.insertCell(6).textContent = product.prodImg;
             });
           })
           .catch(function (error) {
@@ -243,18 +257,19 @@ export default {
     async editProduct() {
       try {
         const editedProduct = {
-          productName: this.form.productName,
-          productPrice: this.form.productPrice,
-          productStock: this.form.productStock,
-          productUrl: this.form.productUrl,
-          category: this.form.category,
+          productPrice: this.form.prodPrice,
+          productName: this.form.prodName,
+          productDesc: this.form.prodDesc,
+          category: this.form.prodCat,
+          productType: this.form.prodType,
+          productUrl: this.form.prodImg,
         };
         const response = await axios.patch(
-          `http://localhost:5000/products/${this.form.productID}`,
+          `http://localhost:5000/products/${this.form.prodID}`,
           editedProduct
         );
         alert("Product updated successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
         this.resetForm();
         $("#exampleModal").modal("hide");
       } catch (error) {
@@ -262,26 +277,28 @@ export default {
       }
     },
     resetForm() {
-      this.form.productName = "";
-      this.form.productPrice = "";
-      this.form.productStock = "";
-      this.form.productUrl = "";
-      this.form.category = "";
+      this.form.prodPrice = "";
+      this.form.prodName = "";
+      this.form.prodDesc = "";
+      this.form.prodCat = "";
+      this.form.prodType = "";
+      this.form.prodImg = "";
     },
     populateForm(product) {
-      this.form.productName = product.productName;
-      this.form.productPrice = product.productPrice;
-      this.form.productStock = product.productStock;
-      this.form.productUrl = product.productUrl;
-      this.form.category = product.category;
+       this.form.prodName = product.prodName;
+      this.form.prodPrice = product.prodPrice;
+      this.form.prodDesc = product.prodDesc;
+      this.form.prodCat = product.prodCat;
+      this.form.prodType = product.prodType;
+      this.form.prodImg = product.prodImg;
     },
     async deleteProduct(productID) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/products/${productID}`
+          `http://localhost:5000/products/${prodID}`
         );
         alert("Product deleted successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
         window.location.reload();
       } catch (error) {
         console.error("Error deleting product:", error);
@@ -291,18 +308,19 @@ export default {
   async editProduct() {
     try {
       const editedProduct = {
-        productName: this.form.productName,
-        productPrice: this.form.productPrice,
-        productStock: this.form.productStock,
-        productUrl: this.form.productUrl,
-        category: this.form.category,
+          productPrice: this.form.prodPrice,
+          productName: this.form.prodName,
+          productDesc: this.form.prodDesc,
+          category: this.form.prodCat,
+          productType: this.form.prodType,
+          productUrl: this.form.prodImg,
       };
       const response = await axios.patch(
-        `http://localhost:5000/products/${this.form.productID}`,
+        `http://localhost:5000/products/${this.form.prodID}`,
         editedProduct
       );
       alert("Product updated successfully");
-      this.$store.dispatch("getmyProjects");
+      this.$store.dispatch("getProducts");
       this.resetForm();
     } catch (error) {
       console.error("Error editing product:", error);

@@ -41,23 +41,26 @@
           style="width: 18rem"
           :alt="product.productName"
         />  -->
-        <div class="card-body" v-for="product in products" :key="product.prodID">
-          <img :src="product.prodImg" :alt="prodName ">
+        
+        <div class="row p-4">
+        <div class="card-body card m-2 p-3" v-for="product in products" :key="product.prodID">
+          <img :src="product.prodImg" class="card-img-top rounded rounded-2" :alt="prodName ">
           <h5 class="card-title">{{ product.prodName }}</h5>
           <h6 class="card-text">{{ product.prodDesc }}</h6>
           <h6 class="card-text">R {{ product.prodPrice }}.00</h6>
           <button class="btn btn-primary">
-            View Details
+             View Details 
             <!-- <router-link
-              :to="{ name: 'single', params: { productID: product.productID } }"
+              :to="{ name: 'single', params: { prodID: product.prodID } }"
             class="todler">
               View Details
-            </router-link> -->
+            </router-link>  -->
           </button>
         </div>
       <!-- </div> -->
     <!-- </div> -->
     <!-- <div v-else class="text-center">Processing...</div> -->
+    </div>
   </div>
 </template>
 
@@ -143,14 +146,20 @@ export default {
   }
   .card {
     display: flex;
-    width: 20rem;
+    width: 18rem;
     height: 33rem;
-    background-color: white;
+    /* background-color:#e7dae4; */
     margin-left: 40px;
+  }
+  img{
+    width: 100%;
   }
   .card h5,
   .card h6 {
     margin: auto;
+  }
+  .card-title, .card-text{
+    color: #CB47B1;
   }
   button {
     margin-bottom: 2rem;
@@ -160,6 +169,7 @@ export default {
     border-radius: 2rem;
     text-align: center;
     background-color: #F1B4E2;
+    width: 8rem;
    
   }
   button:hover {
