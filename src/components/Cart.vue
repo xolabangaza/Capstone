@@ -1,40 +1,36 @@
 <template>
-  <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="cart-items">
-            <div v-for="item in cartItems" :key="item.id">
-              <div>{{ item.name }}</div>
-              <div>Quantity: {{ item.quantity }}</div>
-              <div>Price: {{ item.price }}</div>
-              <button @click="removeItem(item)">Remove</button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close Cart</button>
-        </div>
-      </div>
-    </div>
+  <div>
+    <h2>Your Cart</h2>
+    <ul>
+      <li v-for="item in cart" :key="item.id">
+        <img :src="item.image" :alt="item.name" width="50" />
+        {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+        <button @click="removeFromCart(item)" class="btn btn-danger btn-sm">Remove</button>
+      </li>
+    </ul>
+    <p>Total: ${{ total }}</p>
   </div>
 </template>
+
 <script>
 export default {
+  computed: {
+    cart() {
+      return this.$store.state.cart;
+    },
+    total() {
+      return this.$store.getters.cartTotal;
+    },
+  },
   methods: {
-  showCartModal() {
-    $('#cartModal').modal('show'); // Show the modal
+    removeFromCart(item) {
+      item.quantity = 0;
+      this.$store.commit('removeFromCart', item);
+    },
   },
-  closeCartModal() {
-    $('#cartModal').modal('hide'); // Hide the modal
-  },
-  // ...
-}
-}
+};
 </script>
+
+<style scoped>
+/* Your CSS styles here */
+</style>

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import SingleProduct from '../components/SingleProduct.vue'
 
 
 const routes = [
@@ -32,6 +32,7 @@ const routes = [
     name: "admin",
     component: () => import(/* webpackChunkName: "about" */ '../views/AdminView.vue'),
   },
+
   {
     path: "/products",
     name: "products",
@@ -41,6 +42,11 @@ const routes = [
     path: "/cart",
     name: "cart",
     component: () => import(/* webpackChunkName: "about" */ '../views/CartView.vue'),
+  },
+  {
+    path: "/SingleProduct/:prodID",
+    name: "SingleProduct",
+    component: SingleProduct,
   },
 
 

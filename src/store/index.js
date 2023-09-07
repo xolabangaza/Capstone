@@ -28,10 +28,11 @@ export default createStore({
         const response = await axios.get(`${dbConnection}/products`);
         context.commit("setProducts", response.data);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error("Error fetching products:", error);
       }
     },
-    async getProduct(context, prodID) { // Add prodID as an argument
+    
+    async getProduct(context, prodID) { 
       try {
         const response = await axios.get(`${dbConnection}/products/${prodID}`);
         context.commit("setProduct", response.data);
@@ -41,12 +42,15 @@ export default createStore({
     },
     async getUsers(context) {
       try {
-        const response = await axios.get(`${dbConnection}/users`);
+        const response = await axios.get("http://localhost:5000/users");
+        // Return the response data
         context.commit("setUsers", response.data);
+        // return response.data;
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error("Error fetching users:", error);
+        throw error; // Rethrow the error to handle it in the component
       }
-    },
+    },    
     async fetchProductDetails(context, productID) {
       try {
         const response = await axios.get(
@@ -67,5 +71,13 @@ export default createStore({
         console.error("Error fetching projects:", error);
       }
     },
+      async fetchUsers(context) {
+        try {
+          const response = await axios.get('http://localhost:5000/users');
+          context.commit('setUsers', response.data);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      },
   }
 });

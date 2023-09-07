@@ -1,30 +1,28 @@
 <template>
   <div>
     <div class="text-center">
-       <users-list></users-list> 
-    </div>
-    <div class="text-center">
       <h3 class="text-center">Add Products</h3>
       <input
         type="text"
         v-model="form.productID"
         style="visibility: hidden; display: none"
       />
-      <label>Product Name</label>
-      <input class="just" type="text" v-model="form.productName" />
       <label>Product Price</label>
-      <input class="just" type="number" v-model="form.productPrice" />
-      <label>Product Stock</label>
-      <input class="just" type="number" v-model="form.productStock" />
-      <label>Product Url</label>
-      <input class="just" type="text" v-model="form.productUrl" />
+      <input class="just" type="number" v-model="form.prodPrice" />
+      <label>Product Name</label>
+      <input class="just" type="text" v-model="form.prodName" />
+      <label>Product Desc</label>
+      <input class="just" type="text" v-model="form.prodDesc" />
       <label>Product Category</label>
-      <!-- Fixed typo in label -->
-      <input class="just" type="text" v-model="form.category" />
+      <input class="just" type="text" v-model="form.prodCat" />
+      <label>Product Type</label>
+      <input class="just" type="text" v-model="form.prodType" />
+      <label>Product Url</label>
+      <input class="just" type="text" v-model="form.prodImg" />
       <br />
       <button class="button" @click="submit()">Submit</button>
     </div>
-    <!-- <h2>Users</h2>
+    <h2>Users</h2>
     <table class="table">
       <thead>
         <tr>
@@ -51,7 +49,7 @@
           </td>
         </tr>
       </tbody>
-    </table> -->
+    </table>
     <table class="table">
       <thead>
         <tr>
@@ -164,73 +162,46 @@
       <div v-if="myProjects" class="row p-4"></div>
       <div v-else>Processing...</div>
     </div>
+
+    <!-- Other product-related code and components go here -->
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import SingleUpdateProductModal from "../components/Update-Product.vue";
 import UsersList from "@/components/UsersList.vue";
+
 export default {
-  components: { SingleUpdateProductModal,  UsersList },
+  components: { SingleUpdateProductModal, UsersList },
   computed: {
-    getProducts() {
+    products() {
       return this.$store.state.products;
+    },
+
+    users() {
+      return this.$store.state.users;
     },
   },
   mounted() {
-    this.fetchUsers();
+    // this.fetchUsers();
     this.$store.dispatch("getProducts");
+    this.$store.dispatch("fetchUsers");
   },
-  name: "",
-  props: {},
   data() {
     return {
       form: {
-        productName: "",
-        productPrice: "",
-        productStock: "",
-        productUrl: "",
-        category: "",
+        prodPrice: "",
+        prodName: "",
+        prodDesc: "",
+        prodCat: "",
+        prodType: "",
+        prodImg: "",
       },
-      users: [],
+      // users: [],
     };
   },
   methods: {
-     async fetchUsers() {
-      try {
-        const response = await axios.get("http://localhost:5000/users");
-        this.users = response.data;
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    },
-    async fetchProducts() {
-      try {
-        axios
-          .get("http://localhost:5000/products/:id")
-          .then(function (response) {
-            const products = response.data;
-            const table = document.getElementById("productTable");
-            products.forEach(function (product) {
-              const row = table.insertRow();
-              row.insertCell(1).textContent = product.productName;
-              row.insertCell(2).textContent =
-                "$" + product.productPrice.toFixed(2);
-              row.insertCell(3).textContent = product.productStock;
-              row.insertCell(4).textContent = product.productUrl;
-              row.insertCell(5).textContent = product.category;
-            });
-          })
-          .catch(function (error) {
-            console.error("Error fetching products:", error);
-          });
-
-        const response = await axios.get("http://localhost:5000/products");
-        this.products = response.data;
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    },
     async fetchUsers() {
       try {
         const response = await axios.get("http://localhost:5000/users");
@@ -239,22 +210,22 @@ export default {
         console.error("Error fetching users:", error);
       }
     },
-
     async editProduct() {
       try {
         const editedProduct = {
-          productName: this.form.productName,
-          productPrice: this.form.productPrice,
-          productStock: this.form.productStock,
-          productUrl: this.form.productUrl,
-          category: this.form.category,
+          prodPrice: this.form.prodPrice,
+          prodName: this.form.prodName,
+          prodDesc: this.form.prodDesc,
+          prodCat: this.form.prodCat,
+          prodType: this.form.prodType,
+          prodImg: this.form.prodImg,
         };
         const response = await axios.patch(
-          `http://localhost:5000/products/${this.form.productID}`,
+          `http://localhost:5000/products/${this.form.prodID}`,
           editedProduct
         );
         alert("Product updated successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
         this.resetForm();
         $("#exampleModal").modal("hide");
       } catch (error) {
@@ -262,54 +233,66 @@ export default {
       }
     },
     resetForm() {
-      this.form.productName = "";
-      this.form.productPrice = "";
-      this.form.productStock = "";
-      this.form.productUrl = "";
-      this.form.category = "";
+      this.form.prodPrice = "";
+      this.form.prodName = "";
+      this.form.prodDesc = "";
+      this.form.prodCat = "";
+      this.form.prodType = "";
+      this.form.prodImg = "";
     },
     populateForm(product) {
-      this.form.productName = product.productName;
-      this.form.productPrice = product.productPrice;
-      this.form.productStock = product.productStock;
-      this.form.productUrl = product.productUrl;
-      this.form.category = product.category;
+      this.form.prodID = product.prodID;
+      this.form.prodName = product.prodName;
+      this.form.prodPrice = product.prodPrice;
+      this.form.prodDesc = product.prodDesc;
+      this.form.prodCat = product.prodCat;
+      this.form.prodType = product.prodType;
+      this.form.prodImg = product.prodImg;
     },
-    async deleteProduct(productID) {
+    async deleteProduct(prodID) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/products/${productID}`
+          `http://localhost:5000/products/${prodID}`
         );
         alert("Product deleted successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
         window.location.reload();
       } catch (error) {
         console.error("Error deleting product:", error);
       }
     },
-  },
-  async editProduct() {
-    try {
-      const editedProduct = {
-        productName: this.form.productName,
-        productPrice: this.form.productPrice,
-        productStock: this.form.productStock,
-        productUrl: this.form.productUrl,
-        category: this.form.category,
-      };
-      const response = await axios.patch(
-        `http://localhost:5000/products/${this.form.productID}`,
-        editedProduct
-      );
-      alert("Product updated successfully");
-      this.$store.dispatch("getmyProjects");
-      this.resetForm();
-    } catch (error) {
-      console.error("Error editing product:", error);
-    }
+    async submit() {
+      try {
+        const newProduct = {
+          prodPrice: this.form.prodPrice,
+          prodName: this.form.prodName,
+          prodDesc: this.form.prodDesc,
+          prodCat: this.form.prodCat,
+          prodType: this.form.prodType,
+          prodImg: this.form.prodImg,
+        };
+
+        const response = await axios.post(
+          "http://localhost:5000/products",
+          newProduct
+        );
+
+        if (response.status === 200) {
+          alert("Product added successfully");
+          this.$store.dispatch("getProducts");
+          this.resetForm();
+          window.location.reload();
+        } else {
+          console.error("Error adding product:", response.data);
+        }
+      } catch (error) {
+        console.error("Error adding product:", error);
+      }
+    },
   },
 };
 </script>
+
 <style scoped>
 .just {
   margin: auto;

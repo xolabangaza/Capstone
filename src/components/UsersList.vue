@@ -34,27 +34,18 @@
 
 <script>
 export default {
-  data() {
-    return {
-      users: null,
-       error: null, 
-    };
-  },
-mounted() {
-  this.$store
-    .dispatch("getUsers")
-    .then((response) => {
-      this.users = response.data;
-    })
-    .catch((error) => {
-      this.error = "Error fetching users. Please try again later."; 
-      console.error("Error fetching users:", error);
-    });
-},
-
+  // props: {
+  //   users: {
+  //     type: Array,
+  //     default: () => [],
+  //   },
+  // },
+  props: ["users"]
 };
 </script>
 
 <style scoped>
-/* Add your component-specific styles here */
+h2 {
+  color: rgb(129, 31, 80);
+}
 </style>

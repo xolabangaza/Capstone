@@ -1,7 +1,5 @@
 <template>
   <div>
-
-
     <table>
       <tr>
         <th>Product Name</th>
@@ -67,64 +65,70 @@ import axios from "axios";
 
 export default {
   name: "HelloWorld",
-  computed: {
-    myProjects() {
-      return this.$store.state.myProjects;
-    },
-  },
-  mounted() {
-    this.$store.dispatch("getmyProjects");
-  },
+  // computed: {
+  //   products() {
+  //     return this.$store.state.products;
+  //   },
+  // },
+  // mounted() {
+  //   this.$store.dispatch("getProducts");
+  // },
+
+  props: ["products"],
+
   data() {
     return {
       form: {
-        productID: "",
-        productName: "",
-        productPrice: "",
-        productStock: "",
-        productUrl: "",
-        category: "",
+        prodID: "",
+        prodPrice: "",
+        prodName: "",
+        prodDesc: "",
+        prodCat: "",
+        prodType: "",
+        prodImg: "",
       },
     };
   },
   methods: {
     async submit() {
       try {
-        if (this.form.productID) {
-          await axios.put(`/products/${this.form.productID}`, this.form);
+        if (this.form.prodID) {
+          await axios.put(`/products/${this.form.prodID}`, this.form);
           alert("Product updated successfully");
         } else {
           await axios.post("/productsAdd", this.form);
           alert("Product added successfully");
         }
         this.resetForm();
-        this.$store.dispatch("getmyProjects");
+        // this.$store.dispatch("getProducts");
       } catch (error) {
         console.error("Error submitting product:", error);
       }
     },
     resetForm() {
-      this.form.productID = "";
-      this.form.productName = "";
-      this.form.productPrice = "";
-      this.form.productStock = "";
-      this.form.productUrl = "";
-      this.form.category = "";
+      this.form.prodID = "";
+      this.form.prodPrice = "";
+      this.form.prodName = "";
+      this.form.prodDesc = "";
+      this.form.prodCat = "";
+      this.form.prodType = "";
+      this.form.prodImg = "";
     },
     populateForm(product) {
-      this.form.productID = product.projectID;
-      this.form.productName = product.productName;
-      this.form.productPrice = product.productPrice;
-      this.form.productStock = product.productStock;
-      this.form.productUrl = product.productUrl;
-      this.form.category = product.category;
+      this.form.prodID = product.productID;
+      this.form.prodPrice = product.prodPrice;
+      this.form.prodName = product.prodName;
+      this.form.prodDesc = product.prodDesc;
+      this.form.prodCat = product.prodCat;
+      this.form.prodType = product.prodType;
+      this.form.prodImg = product.prodImg;
     },
 
-    async deleteProduct(productID) {
+    async deleteProduct(prodID) {
       try {
-        await axios.delete(`/products/${productID}`);
+        await axios.delete(`/products/${prodID}`);
         alert("Product deleted successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
       } catch (error) {
         console.error("Error deleting product:", error);
       }
@@ -132,15 +136,16 @@ export default {
     async editProduct() {
       try {
         const editedProduct = {
-          productName: this.form.productName,
-          productPrice: this.form.productPrice,
-          productStock: this.form.productStock,
-          productUrl: this.form.productUrl,
-          category: this.form.category,
+          prodPrice: this.form.prodPrice,
+          prodName: this.form.prodName,
+          prodDesc: this.form.prodDesc,
+          prodCat: this.form.prodCat,
+          prodType: this.form.prodType,
+          prodImg: this.form.prodImg,
         };
-        await axios.patch(`/${this.form.productID}`, editedProduct);
+        await axios.patch(`/${this.form.prodID}`, editedProduct);
         alert("Product updated successfully");
-        this.$store.dispatch("getmyProjects");
+        this.$store.dispatch("getProducts");
         this.resetForm();
       } catch (error) {
         console.error("Error editing product:", error);

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container animate__animated animate__zoomInLeft">
     <h1 class="text-center">Drop Us A Line</h1>
     <p class="text-center">
       We would love to respond to your queries. Feel free to get in touch with
@@ -111,8 +111,8 @@ h3 {
 input {
   width: 100%;
   border: none;
-    border-bottom: 2px solid pink;
-    outline: none;
+  border-bottom: 2px solid pink;
+  outline: none;
     
 }
 textarea {
