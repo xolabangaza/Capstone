@@ -24,20 +24,48 @@
                     </div>
                 </div>
             </div>
-           
+              <!-- Signup Form -->
+             <div class="form signup">
+                <div class="form-content">
+                    <h4>Signup</h4>
+                    <form action="#">
+                        <div class="field input-field">
+                            <input type="text" placeholder="Full Name" class="input">
+                        </div>
+                        <div class="field input-field">
+                            <input type="email" placeholder="Email" class="input">
+                        </div>
+                        <div class="field input-field">
+                            <input type="password" placeholder="Create password" class="password">
+                        </div>
+                        <div class="field input-field">
+                            <input type="password" placeholder="Confirm password" class="password">
+                            <i class='bx bx-hide eye-icon'></i>
+                        </div>
+                        <div class="field button-field">
+                            <button>Signup</button>
+                        </div>
+                    </form>
+                    
+                    <div class="form-link">
+                         <span>Don't have an account? <a href="#" class="link signup-link">Signup</a></span>
+                    </div>
+                </div>
+            </div>
         </div>
         </template>
+  
 <script>
 export default {
     
 }
 </script>
 <style scoped>
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 h1{
     position: absolute;
@@ -47,7 +75,7 @@ h1{
     color: #d5dce1;
 }
 .container{
-    height: 100vh;
+   height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -60,8 +88,9 @@ h1{
     max-width: 26.875rem;
     width: 100%;
     padding: 1.875rem;
+    border: 2px solid blueviolet;
     border-radius:0.375rem;
-    background: #ffffffc6;
+    background: transparent;
 }
 .form.signup{
     opacity: 0;
@@ -78,7 +107,7 @@ h1{
 h4{
     font-size: 1.75rem;
     font-weight: 600;
-    color: #ad1b89;
+    color: #b61c9a;
     text-align: center;
 }
 form{
@@ -103,7 +132,7 @@ form{
 .field input{
     outline: none;
     padding: 0 0.938rem;
-    border: 0.063rem solid#CACACA;
+    border: 0.063rem solid#83168f;
 }
 .field input:focus{
     border-bottom-width: 0.125rem;
@@ -120,12 +149,12 @@ form{
 }
 .field button{
     color: #fff;
-    background-color: #c65794;
+    background-color: #ec75e6;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 .field button:hover{
-    background-color: #5c0643;
+    background-color: #b3279e;
 }
 .form-link{
     text-align: center;
@@ -135,10 +164,10 @@ form{
 .form-link a{
     font-size: 0.875rem;
     font-weight: 400;
-    color: #232836;
+    color: #c00fa8;
 }
 .form a{
-    color: #0171d3;
+    color: #b72176;
     text-decoration: none;
 }
 .form-content a:hover{
@@ -149,7 +178,7 @@ form{
     height: 0.063rem;
     width: 100%;
     margin: 2.25rem 0;
-    background-color: #d4d4d4;
+    background-color: #a42424;
 }
 .line::before{
     content: 'Or';
@@ -157,12 +186,12 @@ form{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFF;
-    color: #8b8b8b;
+    background-color: #bc2e2e;
+    color: #c02d2d;
     padding: 0 0.938rem;
 }
 .field button {
-    color: #981696;
+    color: #2d0626;
     transition: all 0.3s;
     position: relative;
   }
@@ -183,8 +212,8 @@ form{
     border-bottom-width: 0.063rem;
     border-top-style: solid;
     border-bottom-style: solid;
-    border-top-color: rgba(255,255,255,0.5);
-    border-bottom-color: rgba(164, 28, 146, 0.5);
+    border-top-color: rgba(238, 21, 220, 0.5);
+    border-bottom-color: rgba(125, 21, 139, 0.5);
     transform: scale(0.1, 1);
   }
   .field button:hover span {
@@ -203,7 +232,7 @@ form{
     height: 100%;
     z-index: 1;
     transition: all 0.3s;
-    background-color: rgba(178, 44, 129, 0.1);
+    background-color: rgba(219, 29, 175, 0.1);
   }
   .field button :hover::after {
     opacity: 0; 
@@ -211,3 +240,6 @@ form{
   }
     
 </style>
+
+
+

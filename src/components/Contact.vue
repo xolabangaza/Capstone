@@ -111,8 +111,8 @@ h3 {
 input {
   width: 100%;
   border: none;
-    border-bottom: 2px solid pink;
-    outline: none;
+  border-bottom: 2px solid pink;
+  outline: none;
     
 }
 textarea {
