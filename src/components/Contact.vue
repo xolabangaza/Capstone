@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container animate__animated animate__zoomInLeft">
     <h1 class="text-center">Drop Us A Line</h1>
     <p class="text-center">
       We would love to respond to your queries. Feel free to get in touch with
