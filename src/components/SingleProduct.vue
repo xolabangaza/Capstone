@@ -10,11 +10,45 @@
         <h6> {{ product.prodCat }}</h6>
         <h6>{{ product.prodType }}</h6>
         <h5>R {{ product.prodPrice }}</h5>
+      <div class="size-color-single">
+          <label>Size</label>
+          <select name="product-size">
+              <option value="1">XXL</option>
+              <option value="2">XL</option>
+              <option value="3">L</option>
+              <option value="4">M</option>
+              <option value="5">S</option>
+          </select>
+      </div>
         <button @click="addToCart">AddToCart</button>
+        
+      </div>
+      
+    </div>
+        <div class="grid related-products">
+      <div class="column-xs-12">
+        <h3>You may also like</h3>
+      </div>
+      <div class="column column-md-4">
+        <img src="https://source.unsplash.com/miziNqvJx5M">
+        <h4>Succulent</h4>
+        <p class="price">$19.99</p>
+      </div>
+      <div class="column column-md-4">
+        <img src="https://source.unsplash.com/2y6s0qKdGZg">
+        <h4>Terranium</h4>
+        <p class="price">$19.99</p>
+      </div>
+      <div class="column column-md-4">
+        <img src="https://source.unsplash.com/6Rs76hNbIWE">
+        <h4>Cactus</h4>
+        <p class="price">$19.99</p>
       </div>
     </div>
-    <div v-else>Loading...</div>
   </div>
+    
+    <!-- <div v-else>Loading...</div> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -79,5 +113,18 @@ button{
 }
 button:hover{
   background-color:#db599a ;
+}
+label{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.grid{
+  display: flex;
+}
+.column{
+  min-height: 40vh;
+}
+h3{
+  color: #db599a;
 }
 </style>
