@@ -22,47 +22,145 @@
       <br />
       <button class="button" @click="submit()">Submit</button>
     </div>
-
-    <!-- Display Users using the UsersList.vue component -->
-    <UsersList :users="users"/>
-
-    <div class="text-center">
-      <h2>Products</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Product Price</th>
-            <th>Product Name</th>
-            <th>Product Desc</th>
-            <th>Category</th>
-            <th>Product Type</th>
-            <th>Product URL</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in products" :key="product.prodID">
-            <td>{{ product.prodPrice }}</td>
-            <td>{{ product.prodName }}</td>
-            <td>{{ product.prodDesc }}</td>
-            <td>{{ product.prodCat }}</td>
-            <td>{{ product.prodType }}</td>
-            <td><img :src="product.prodImg" :alt="product.prodName" /></td>
-            <td>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="populateForm(product)"
-              >
-                Edit
-              </button>
-              <button @click="deleteProduct(product.prodID)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <h2>Users</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Date of Birth</th>
+          <th>Email</th>
+          <th>Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{ user.userID }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.userDOB }}</td>
+          <td>{{ user.emailAdd }}</td>
+          <td>{{ user.userPass }}</td>
+          <td>{{ user.userRole }}</td>
+          <td>
+            <img src="{{ user.userProfile}} " alt="{{ user.firstName }}" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Product Price</th>
+          <th>Product Stock</th>
+          <th>Product URL</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="project in myProjects" :key="project.projectID">
+          <td>{{ project.productName }}</td>
+          <td>{{ project.productPrice }}</td>
+          <td>{{ project.productStock }}</td>
+          <td><img :src="project.productUrl" :alt="project.productName" /></td>
+          <td>{{ project.category }}</td>
+          <td>
+            <!-- <button>
+      <SingleUpdateProductModal :form="form" @update-product="editProduct()" />
+        </button> -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              @click="populateForm(project)"
+            >
+              Edit
+            </button>
+            <!-- modal -->
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                      Update Product
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <label>Product Name</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.productName"
+                    />
+                    <label>Product Price</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      v-model="form.productPrice"
+                    />
+                    <label>Product Stock</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      v-model="form.productStock"
+                    />
+                    <label>Product Url</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.productUrl"
+                    />
+                    <label>Product Category</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.category"
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="editProduct()"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button @click="deleteProduct(project.productID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <div v-if="myProjects" class="row p-4"></div>
+      <div v-else>Processing...</div>
     </div>
 
     <!-- Other product-related code and components go here -->
