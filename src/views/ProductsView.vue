@@ -1,4 +1,5 @@
 <template>
+<Spinner/>
   <div>
     <div v-if="products" class="row p-4 justify-content-evenly">
       <ProdComp :products="products" />
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import Spinner from "@/components/Spinner.vue"
 import ProdComp from "@/components/ProdComp.vue";
 
 export default {
@@ -19,7 +21,7 @@ export default {
   mounted() {
     this.$store.dispatch("getProducts")
   },
-  components: { ProdComp },
+  components: {Spinner ,ProdComp },
 };
 </script>
 

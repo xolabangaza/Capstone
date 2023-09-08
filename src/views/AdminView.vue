@@ -266,7 +266,7 @@ th,
 td {
   padding: 8px;
   text-align: center;
-  border-bottom: 4px solid #ddd;
+  border-bottom: 4px solid #c836b2;
 }
 .table {
   border-collapse: collapse;

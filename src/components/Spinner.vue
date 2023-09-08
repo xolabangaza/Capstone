@@ -1,52 +1,54 @@
-<template >
-<div class="spinner">
-  <div class="spinner-inner">
-    <div class="spinner-dot"></div>
-    <div class="spinner-dot"></div>
-    <div class="spinner-dot"></div>
+<template>
+  <div>
+    <div v-if="isLoading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div v-else>
+      
+        <div class="row p-4">
+      <div
+        class="card-body card m-2 p-3"
+        v-for="product in filteredProducts"
+        :key="product.prodID"
+      >
+        <img
+          :src="product.prodImg"
+          class="card-img-top rounded rounded-2"
+          :alt="product.prodName"
+        />
+        <h5 class="card-title">{{ product.prodName }}</h5>
+        <h6 class="card-text">{{ product.prodDesc }}</h6>
+        <h6 class="card-text">R {{ product.prodPrice }}.00</h6>
+        <button class="btn btn-primary">
+          <router-link
+            :to="{ name: 'SingleProduct', params: { prodID: product.prodID } }"
+            class="todler"
+          >
+            View Details
+          </router-link>
+        </button>
+      </div>
+    </div>
+    </div>
   </div>
-</div>
 </template>
+
 <script>
 export default {
-    
-}
+  computed: {
+    isLoading() {
+      return this.$store.state.products === null;
+    }
+  }
+};
 </script>
+
 <style scoped>
-.spinner {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.spinner-border{
+  color: rgb(187, 24, 24);
+  width: 80px;
 }
 
-.spinner-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.spinner-dot {
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
-}
-
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-    
 </style>

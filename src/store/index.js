@@ -1,5 +1,5 @@
-import { createStore } from 'vuex'
-import axios from 'axios'
+import { createStore } from "vuex";
+import axios from "axios";
 const dbConnection = "http://localhost:5000";
 export default createStore({
   state: {
@@ -8,6 +8,7 @@ export default createStore({
     myAdmins: null,
     users: null,
   },
+
   mutations: {
     setProducts: (state, products) => {
       state.products = products;
@@ -20,7 +21,7 @@ export default createStore({
     },
     setUsers: (state, users) => {
       state.users = users;
-    },    
+    },
   },
   actions: {
     async getProducts(context) {
@@ -31,8 +32,8 @@ export default createStore({
         console.error("Error fetching products:", error);
       }
     },
-    
-    async getProduct(context, prodID) { 
+
+    async getProduct(context, prodID) {
       try {
         const response = await axios.get(`${dbConnection}/products/${prodID}`);
         context.commit("setProduct", response.data);
@@ -50,7 +51,7 @@ export default createStore({
         console.error("Error fetching users:", error);
         throw error; // Rethrow the error to handle it in the component
       }
-    },    
+    },
     async fetchProductDetails(context, productID) {
       try {
         const response = await axios.get(
@@ -71,13 +72,41 @@ export default createStore({
         console.error("Error fetching projects:", error);
       }
     },
-      async fetchUsers(context) {
-        try {
-          const response = await axios.get('http://localhost:5000/users');
-          context.commit('setUsers', response.data);
-        } catch (error) {
-          console.error('Error fetching users:', error);
-        }
-      },
+    async fetchUsers(context) {
+      try {
+        const response = await axios.get("http://localhost:5000/users");
+        context.commit("setUsers", response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    },
+    // Function for adding item on the store
+async addItem({ commit, state }, product) {
+  try {
+    const existingProduct = state.items.find((item) => item.prodID === product.prodID);
+
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      const response = await fetch(`${dbLink}add-item`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+
+      if (response.ok) {
+        commit("addItem", product);
+      } else {
+        console.error('Error adding to cart:', response.statusText);
+      }
+    }
+  } catch (error) {
+
+
+    console.error('Error adding to cart:', error);
   }
+},
+  },
 });

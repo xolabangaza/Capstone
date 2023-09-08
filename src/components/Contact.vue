@@ -31,7 +31,7 @@
             </div>
           </div>
           <label> Message</label>
-          <textarea rows="5" placeholder="Your message"></textarea>
+          <textarea name="message" rows="5" placeholder="Your message"></textarea>
           <button type="submit">Send</button>
         </form>
       </div>
@@ -112,7 +112,7 @@ input {
   width: 100%;
   border: none;
   border-bottom: 2px solid pink;
-  outline: none;
+  outline:#c52e95;
     
 }
 textarea {

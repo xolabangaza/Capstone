@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="product" class="product-detail row px-5 py-5 animate__animated animate__zoomInLeft">
+    <div v-if="product" class="product-detail row px-5 py-5">
       <div class="product-image col-12 col-sm-6 col-md-6">
         <img :src="product.prodImg" :alt="product.prodName" />
       </div>
@@ -25,24 +25,34 @@
       </div>
       
     </div>
-        <div class="grid related-products">
-      <div class="column-xs-12">
-        <h3>You may also like</h3>
+    <h3 class="text-center">You may also like</h3>
+        <div class="products">
+      <div class="column">
       </div>
-      <div class="column column-md-4">
-        <img src="https://source.unsplash.com/miziNqvJx5M">
-        <h4>Succulent</h4>
-        <p class="price">$19.99</p>
+      <div class="column">
+        <img src="https://i.postimg.cc/3xJ3BZW7/th5198-awc-01.webp" class="pic">
+        <h4>Lacoste</h4>
+        <p class="price">R999</p>
       </div>
-      <div class="column column-md-4">
-        <img src="https://source.unsplash.com/2y6s0qKdGZg">
-        <h4>Terranium</h4>
-        <p class="price">$19.99</p>
+      <div class="column">
+        <img src="https://i.postimg.cc/G2qH7g08/36ab9e0c-8854-4af9-9818-f44b493f4b1c.webp" class="pic">
+        <h4>Nike</h4>
+        <p class="price">R799.99</p>
       </div>
-      <div class="column column-md-4">
-        <img src="https://source.unsplash.com/6Rs76hNbIWE">
-        <h4>Cactus</h4>
-        <p class="price">$19.99</p>
+      <div class="column">
+        <img src="https://i.postimg.cc/9Q8CNqq9/0b9c74e2201d4a558f9528d6ad9a1b28.webp" class="pic">
+        <h4>Lacoste</h4>
+        <p class="price">R859.99</p>
+      </div>
+            <div class="column">
+        <img src="https://i.postimg.cc/BnsjGD6w/mens-sport-crocodule-print-tennis-t-shirt-th9417yh9lacoste-mens-sport-crocodule-print-tennis-t-shirt.webp" class="pic">
+        <h4>Lacoste</h4>
+        <p class="price">R859.99</p>
+      </div>
+            <div class="column">
+        <img src="https://i.postimg.cc/kXrd0J8b/2a0b3321f51b4dd5a968d727145dd80e.webp" class="pic">
+        <h4>Lacoste</h4>
+        <p class="price">R859.99</p>
       </div>
     </div>
   </div>
@@ -65,7 +75,7 @@ export default {
     },
   },
   methods: {
-    addToCartProduct() {
+    addToCartProduct(product) {
       this.$store
         .dispatch('addToCart', this.product)
         .then(() => {
@@ -74,6 +84,7 @@ export default {
         .catch((error) => {
           console.error('Error adding to cart:', error);
         });
+         
     },
   },
   async created() {
@@ -89,10 +100,10 @@ export default {
 
 <style scoped>
 img {
-  border: 2px solid;
+  border: 2px solid rgb(202, 88, 192);
   border-radius: 20px;
   height: 75vh;
-  width: 32vw;
+  width: 30vw;
 }
 
 .product-info {
@@ -105,10 +116,11 @@ img {
   
 }
 button{
-  border-radius: 14px;
-  height: 40px;
-  background-color: ghostwhite; 
-  color: rgb(186, 15, 121);
+  border-radius: 26px;
+  height: 60px;
+  width: 200px;
+  background-color: rgb(10, 10, 61); 
+  color: rgb(244, 232, 240);
   margin-top: 10px;
 }
 button:hover{
@@ -117,14 +129,47 @@ button:hover{
 label{
   margin-bottom: 10px;
   margin-top: 10px;
+  margin-right: 10px;
 }
-.grid{
-  display: flex;
+select{
+  width: 100px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: ghostwhite;
+  margin-bottom: 10px;
 }
-.column{
-  min-height: 40vh;
+.text-center {
+      text-align: center;
+      color: #db599a;
 }
-h3{
-  color: #db599a;
+ .products {
+      display: flex;
+      flex-direction: row;
+      /* align-items: center; */
+      gap: 20px;
+  }
+ .column {
+      /* display: flex;
+      flex-direction: row; */
+      /* align-items: center; */
+      padding: 20px;
+  }
+ .pic {
+      max-width: 100%;
+      height: auto;
+  }
+ h4 {
+      /* margin: 10px 0; */
+      color: #db599a;
+      margin-top: 20px;
+      /* margin-right: 200px; */
+  }
+  .price {
+      font-weight: bold;
+      color: #db599a;
+  }
+.pic{
+  width: 200px;
+  height: 300px;
 }
 </style>
