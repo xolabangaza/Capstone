@@ -32,20 +32,57 @@
               <router-link class="nav-link" to="/contact">Contact</router-link>
             </li>
           </ul>
-           <li class="nav-item">
-              <router-link class="nav-link" to="/account"><i class="fa-solid fa-user" style="color: #da15f4;"></i></router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/cart"><i class="fa-solid fa-cart-shopping" style="color: #d537d7;"></i></router-link>
-            </li>
+          <!-- <li class="nav-item">
+            <router-link class="nav-link" to="/register"
+              ><i class="fa-solid fa-user" style="color: #da15f4"></i
+            ></router-link>
+          </li> -->
+          <li class="nav-item">
+            <router-link class="nav-link" to="/login"
+              ><i class="fa-solid fa-user" style="color: #da15f4"></i
+            ></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/cart"
+              ><i class="fa-solid fa-cart-shopping" style="color: #d537d7"></i
+            ></router-link>
+          </li>
         </div>
       </div>
+    <div v-if="isLoggedIn">
+      <p>Welcome back {{ userFirstName }} {{ userLastName }}</p>
+    </div>
     </nav>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    isLoggedIn() {
+      // Check if the user is logged in
+      const userDataJSON = localStorage.getItem("userData");
+      return !!userDataJSON;
+    },
+    userFirstName() {
+      // Get the user's first name from localStorage
+      const userDataJSON = localStorage.getItem("userData");
+      if (userDataJSON) {
+        const userData = JSON.parse(userDataJSON);
+        return userData.result.firstName || ""; // Replace 'firstName' with the actual field name
+      }
+      return "";
+    },
+    userLastName() {
+      const userDataJSON = localStorage.getItem("userData");
+      if (userDataJSON) {
+        const userData = JSON.parse(userDataJSON);
+        return userData.result.lastName || "";
+      }
+      return "";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -53,7 +90,7 @@ export default {};
   color: rgba(83, 40, 208, 1) !important;
 }
 .navbar {
-  background-color:rgba(3, 5, 27, 1)!important;
+  background-color: rgba(3, 5, 27, 1) !important;
   color: white !important;
   height: 100px;
   display: flex;
@@ -83,8 +120,6 @@ export default {};
   color: white;
 }
 
-
-
 @media (max-width: 300px) {
   .navbar {
     flex-direction: column;
@@ -104,5 +139,8 @@ export default {};
     font-size: 14px;
     padding: 6px;
   }
+}
+p{
+  color: aliceblue;
 }
 </style>

@@ -1,12 +1,15 @@
 import { createStore } from "vuex";
 import axios from "axios";
-const dbConnection = "http://localhost:5000";
+const dbConnection = "http://localhost:5000/";
+import Swal from 'sweetalert2'
 export default createStore({
   state: {
     products: null,
     product: null,
     myAdmins: null,
     users: null,
+    token: null,
+    isLoggedIn: false,
   },
 
   mutations: {
@@ -19,14 +22,45 @@ export default createStore({
     setMyAdmins: (state, myAdmins) => {
       state.myAdmins = myAdmins;
     },
-    setUsers: (state, users) => {
-      state.users = users;
+    setUser(state, user) {
+      state.user = user;
+      state.isLoggedIn = true;
+    },
+    setToken(state, token) {
+      state.token = token;
+    },
+    clearUser(state) {
+      state.user = null;
+      state.token = null;
+      state.isLoggedIn = false;
+    },
+    //Err handling and Success
+    setErrMsg(state, message) {
+      state.errMsg = message;
+    },
+    setSuccMsg(state, message) {
+      state.succMsg = message;
+    },
+    clearMessages(state) {
+      state.errMsg = null;
+      state.succMsg = null;
+    },
+    setUserFromLocalStorage(state) {
+      const token = localStorage.getItem("userToken");
+      if (token) {
+        state.token = token;
+        state.isLoggedIn = true;
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        if (userData) {
+          state.user = userData;
+        }
+      }
     },
   },
   actions: {
     async getProducts(context) {
       try {
-        const response = await axios.get(`${dbConnection}/products`);
+        const response = await axios.get(`${dbConnection}products`);
         context.commit("setProducts", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -35,7 +69,7 @@ export default createStore({
 
     async getProduct(context, prodID) {
       try {
-        const response = await axios.get(`${dbConnection}/products/${prodID}`);
+        const response = await axios.get(`${dbConnection}products/${prodID}`);
         context.commit("setProduct", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -66,7 +100,7 @@ export default createStore({
     },
     async getmyAdmins(context) {
       try {
-        const response = await axios.get(`${dbConnection}/products`);
+        const response = await axios.get(`${dbConnection}products`);
         context.commit("setmyAdmins", response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -108,5 +142,78 @@ async addItem({ commit, state }, product) {
     console.error('Error adding to cart:', error);
   }
 },
+
+
+//User
+  //register
+  async registerUser({ commit }, userData) {
+    try {
+      const response = await axios.post(`${dbConnection}register`, userData);
+      const user = response.data;
+      commit("setUser", user);
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Successful Registration ",
+          text: "You have registered successfully .",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "An error occurred during registration.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    }
   },
+  //Login
+  async loginUser({ commit }, credentials) {
+    try {
+      const response = await axios.post(`${dbConnection}login`, credentials);
+      if (response.status === 200) {
+        const { token, user } = response.data;
+        console.log(response.data);
+        console.log(token);
+        commit("setToken", token);
+        commit("setUser", user);
+        // Store user data in local storage
+        localStorage.setItem("userToken", token);
+        localStorage.setItem("userData", JSON.stringify(response.data));
+        window.location.reload();
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have logged in successfully .",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred during login.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    }
+  },
+ 
+  logout({ commit }) {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userData");
+    commit("clearUser");
+    window.location.reload();
+  },
+
+},
 });
+

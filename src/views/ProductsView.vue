@@ -1,10 +1,10 @@
 <template>
 <Spinner/>
   <div>
-    <div v-if="products" class="row p-4 justify-content-evenly">
+    <div v-if="products" class="row">
       <ProdComp :products="products" />
     </div>
-    <div v-else>Processing...</div>
+    
   </div>
 </template>
 

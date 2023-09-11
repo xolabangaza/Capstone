@@ -48,7 +48,8 @@ export default {
 <style scoped>
 .spinner-border{
   color: rgb(187, 24, 24);
-  width: 80px;
+  width: 60px;
+  border-radius: 80%;
 }
 
 </style>

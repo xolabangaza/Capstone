@@ -1,18 +1,20 @@
 <template>
-<div>
-  <div>
-    <div>
+  <div class="products-container">
+     <div class="tennis-image">
+      <img src="https://i.postimg.cc/tTJxsQbc/US-Open-news-Novak-Djokovic-strengthens-GOAT-status-after-breaking-Serena-Williams-record.jpg" alt="Tennis" class="tennis-imagee" />
+    </div>
+    <div class="filters">
       <!-- Sorting -->
-      <div>
+      <div class="sort-container">
         <label>Sort by Price:</label>
-        <button @click="sortProducts('asc')">Ascending</button>
-        <button @click="sortProducts('desc')">Descending</button>
+        <button @click="sortProducts('asc')" class="button">Ascending</button>
+        <button @click="sortProducts('desc')" class="button">Descending</button>
       </div>
 
       <!-- Filtering -->
-      <div>
-        <label>Filter by Category:</label>
-        <select v-model="selectedCategory" @change="filterProducts">
+      <div class="filter-container">
+        <label class="label">Filter by Category:</label>
+        <select v-model="selectedCategory" @change="filterProducts" class="select">
           <option value="">All</option>
           <option
             v-for="category in uniqueCategories"
@@ -25,28 +27,28 @@
       </div>
 
       <!-- Searching -->
-      <div>
-        <label>Search by Product Name:</label>
-        <input class="input" type="text" v-model="searchQuery" />
+      <div class="search-container">
+        <label class="label">Search by Product Name:</label>
+        <input class="input input" type="text" v-model="searchQuery" />
         <!-- <button @click="searchProducts">Search</button> -->
       </div>
     </div>
 
-    <div class="row p-4">
+    <div class="products">
       <div
-        class="card-body card m-2 p-3"
+        class="card m-2 p-3 card"
         v-for="product in filteredProducts"
         :key="product.prodID"
       >
         <img
           :src="product.prodImg"
-          class="card-img-top rounded rounded-2"
+          class="card-img-top rounded"
           :alt="product.prodName"
         />
         <h5 class="card-title">{{ product.prodName }}</h5>
         <h6 class="card-text">{{ product.prodDesc }}</h6>
         <h6 class="card-text">R {{ product.prodPrice }}.00</h6>
-        <button class="btn btn-primary">
+        <button class="button">
           <router-link
             :to="{ name: 'SingleProduct', params: { prodID: product.prodID } }"
             class="todler"
@@ -56,7 +58,6 @@
         </button>
       </div>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -115,84 +116,153 @@ export default {
   },
 };
 </script>
-
-
 <style scoped>
-.card-body {
-  transition: transform 0.2s;
-}
-.card-body:hover {
-  -ms-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-.todler {
-  text-decoration: none;
-}
-.input {
-  border: 2px solid;
-  border-radius: 10px;
-}
-p {
-  color: black;
-}
-.card {
+.products-container {
   display: flex;
-  width: 18rem;
-  height: 33rem;
-  margin-left: 40px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
-img {
-  width: 100%;
-  min-height: 50vh;
-}
-.card h5,
-.card h6 {
-  margin: auto;
-}
-.card-title,
-.card-text {
-  color: #cb47b1;
-}
-button {
-  margin-bottom: 2rem;
-  margin-top: 4px;
-  margin-left: 70px;
-  border: 3px solid #f1b4e2;
-  border-radius: 2rem;
-  text-align: center;
-  background-color: #f1b4e2;
-  width: 8rem;
-  color: #cb47b1;
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 60%;
+  max-width: 800px;
+  margin-bottom: 20px;
   
 }
-button:hover {
-  background: #cb47b1;
+
+.sort-container,
+.filter-container,
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 50%;
+  justify-content: space-between;
+  margin-left: 40px;
 }
-label{
-  color: #cb47b1;
+
+.sort-container label,
+.filter-container label,
+.search-container label {
+  flex: 1;
+  margin-right: 10px;
 }
-select{
+
+.sort-container button,
+.filter-container select,
+.search-container input {
+  flex: 2;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+  height: auto;
+  margin: 20px;
   border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 20px;
 }
-.input{
-  height: 40px;
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
+
+.card-img-top {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card h5,
+.card h6 {
+  margin: 0;
+  padding: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-title,
+.card-text {
+  color: #333;
+}
+
+.button {
+  margin: 10px auto;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #e50998;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #f30ed0;
+}
+
+.label {
+  color: #cf5bda;
+}
+
+.select {
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 16px;
+  color: #d01889;
+  background-color: #fff;
+  flex: 2;
+}
+
+.input {
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 16px;
+  color: #d827cd;
+  background-color: #fff;
+  flex: 2;
+}
+
+.tennis-image{
+  width: 100%;
+  margin-top: -6.5%;
+}
+.tennis-imagee{
+  width: 100vw;
+  height: 60vh;
+  
+  
+}
+.todler{
+  text-decoration: none;
+}
+
 @media (max-width: 700px) {
-  * {
-    overflow: hidden;
-  }
   .card {
     width: 100%;
-    margin: 20px;
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    border-top: transparent;
-  }
-  button {
-    margin-bottom: 20px;
-    margin-left: 0;
+    margin: 20px 0;
   }
 }
 </style>
