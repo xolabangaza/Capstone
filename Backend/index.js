@@ -2,14 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const {router, verifyAToken} =  require("./routes/routes.js");
-// import express
-//import express from "express";
-// import cors
-//import cors from "cors";
-//import bodyParser from "body-parser";
-// import routes
-//import Router from "./routes/routes.js";
-// init express
+
 const app = express();
 // use express json
 app.use(express.json());
