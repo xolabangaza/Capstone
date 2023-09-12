@@ -32,20 +32,17 @@
               <router-link class="nav-link" to="/contact">Contact</router-link>
             </li>
           </ul>
-          <!-- <li class="nav-item">
-            <router-link class="nav-link" to="/register"
+          <li class="nav-items">
+            <router-link v-if="!isLoggedIn" class="nav-link " to="/login"
               ><i class="fa-solid fa-user" style="color: #da15f4"></i
             ></router-link>
-          </li> -->
-          <li class="nav-item">
-            <router-link class="nav-link" to="/login"
-              ><i class="fa-solid fa-user" style="color: #da15f4"></i
-            ></router-link>
+             <button v-else @click="logout">Logout</button>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/cart"
-              ><i class="fa-solid fa-cart-shopping" style="color: #d537d7"></i
-            ></router-link>
+          <li class="nav-items">
+               <!-- Cart Icon/Button to Open Cart -->
+             <router-link class="nav-link" to="/cart" @click="toggleCart">
+               <i class="fas fa-shopping-cart"  style="color: #d537d7"></i>
+             </router-link>
           </li>
         </div>
       </div>
@@ -59,7 +56,7 @@
 <script>
 export default {
   computed: {
-    isLoggedIn() {
+isLoggedIn() {
       // Check if the user is logged in
       const userDataJSON = localStorage.getItem("userData");
       return !!userDataJSON;
@@ -80,6 +77,14 @@ export default {
         return userData.result.lastName || "";
       }
       return "";
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      localStorage.removeItem("userData");
+      this.$router.push("/login");
+      window.location.reload();
     },
   },
 };
@@ -118,6 +123,19 @@ export default {
   margin-left: 100px;
   font-size: 1.4rem;
   color: white;
+}
+.nav-items {
+  /* margin: 0; */
+  /* padding: 0; */
+  display: flex;
+  margin-left: 60px;
+  font-size: 1.4rem;
+  color: white;
+}
+button{
+  border-radius: 20px;
+  background-color: blueviolet;
+  color: rgb(39, 12, 128);
 }
 
 @media (max-width: 300px) {

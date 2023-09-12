@@ -20,7 +20,7 @@
               <option value="5">S</option>
           </select>
       </div>
-        <button @click="addToCart">AddToCart</button>
+        <button @click="addToCartProduct">AddToCart</button>
         
       </div>
       
@@ -62,39 +62,84 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
   // props: ["product"],
   data() {
     return {
       error: null,
+       prodID: this.$route.params.prodID,
+      quantity: 1,
     };
   },
   computed: {
     product() {
       return this.$store.state.product;
     },
+     cart() {
+      return this.$store.state.cart;
+    },
   },
   methods: {
-    addToCartProduct(product) {
-      this.$store
-        .dispatch('addToCart', this.product)
-        .then(() => {
-          this.$store.dispatch('getCart');
-        })
-        .catch((error) => {
-          console.error('Error adding to cart:', error);
+       async addToCartProduct() {
+      try {
+        const userDataJSON = localStorage.getItem("userData");
+        if (userDataJSON) {
+          const userData = JSON.parse(userDataJSON);
+          const userID = userData.result.userID;
+          const product = {
+            prodID: this.product.prodID,
+            userID: userID,
+            quantity: this.quantity,
+          };
+          const existingProductIndex = this.$store.state.cart.findIndex(
+            (item) => item.prodID === product.prodID
+          );
+          if (existingProductIndex !== -1) {
+            const existingProduct = this.$store.state.cart[existingProductIndex];
+            await this.$store.dispatch("updateCartItem", {
+              index: existingProductIndex,
+              newQuantity: existingProduct.quantity + this.quantity,
+            });
+          } else {
+            await this.$store.dispatch("addToCart", product);
+          }
+          await this.$store.dispatch("getCart");
+          Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+            text: "The product has been added to your cart.",
+          });
+        } else {
+          console.error("User data not found in localStorage.");
+        }
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while adding the product to your cart.",
         });
-         
+      }
     },
   },
   async created() {
     const prodID = this.$route.params.prodID;
     try {
-      await this.$store.dispatch('getProduct', prodID);
+      await this.$store.dispatch("getProduct", prodID);
     } catch (error) {
-      this.error = 'Product not found';
+      this.error = "Product not found";
     }
   },
+
+  // async created() {
+  //   const prodID = this.$route.params.prodID;
+  //   try {
+  //     await this.$store.dispatch('getProduct', prodID);
+  //   } catch (error) {
+  //     this.error = 'Product not found';
+  //   }
+  // },
 };
 </script>
 

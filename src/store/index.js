@@ -8,11 +8,43 @@ export default createStore({
     product: null,
     myAdmins: null,
     users: null,
+    user: null,
     token: null,
     isLoggedIn: false,
+    cart: [],
   },
 
   mutations: {
+    //CART
+  setCart(state, cart) {
+    state.cart = cart;
+  },
+  // addToCart(state, product) {
+  //   state.cart.push(product);
+  // },
+  addToCart(state, product) {
+    const existingProduct = state.cart.find(
+      (item) => item.prodID === product.prodID
+    );
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    } else {
+      product.quantity = 1;
+      state.cart.push(product);
+    }
+  },
+  updateCartItemQuantity(state, { prodID, prodQUANTITY }) {
+    const cartItem = state.cart.find((item) => item.prodID === prodID);
+    if (cartItem) {
+      cartItem.quantity = prodQUANTITY;
+    }
+  },
+  removeItem(state, cartID) {
+    const index = state.cart.findIndex((item) => item.cartID === cartID);
+    if (index !== -1) {
+      state.cart.splice(index, 1);
+    }
+  },
     setProducts: (state, products) => {
       state.products = products;
     },
@@ -21,6 +53,9 @@ export default createStore({
     },
     setMyAdmins: (state, myAdmins) => {
       state.myAdmins = myAdmins;
+    },
+    setUsers: (state, users) => {
+      state.users = users;
     },
     setUser(state, user) {
       state.user = user;
@@ -58,6 +93,100 @@ export default createStore({
     },
   },
   actions: {
+    async getCart({ commit }) {
+      try {
+        const response = await axios.get(`${dbConnection}cart`);
+        commit("setCart", response.data);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    },
+    async addToCart({ commit, state }, product) {
+      try {
+        if (!state.cart) {
+          console.error("Cart is not initialized.");
+          return false;
+        }
+        const response = await axios.post(`${dbConnection}cart`, product);
+        console.log(product);
+        if (response.status === 200) {
+          commit("addToCart", response.data);
+          console.log("addToCart", response.data);
+          await this.dispatch("getCart");
+          Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+            text: "The product has been added to your cart.",
+          });
+          return true;
+        } else {
+          console.error("Error adding to cart:", response.statusText);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while adding the product to your cart.",
+          });
+          return false;
+        }
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while adding the product to your cart.",
+        });
+        throw error;
+      }
+    },
+    async removeItem({ commit }, cartID) {
+      try {
+        await axios.delete(`${dbConnection}cart/${cartID}`);
+        commit("removeItem", cartID);
+        console.log(cartID);
+        Swal.fire({
+          icon: "success",
+          title: "Item Removed",
+          text: "The item has been successfully removed from the cart.",
+        });
+      } catch (error) {
+        console.error("Error removing from cart:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while removing the item from the cart.",
+        });
+      }
+    },
+    
+    async updateCartItemQuantity(
+      { commit, state },
+      { cartID, prodID, quantity }
+    ) {
+      try {
+        const response = await axios.patch(`${dbConnection}cart/${prodID}`, {
+          quantity,
+        });
+        if (response.status === 200) {
+
+          const cartItem = state.cart.find(
+            (item) => item.cartID === cartID && item.prodID === prodID
+          );
+          if (cartItem) {
+            cartItem.quantity = quantity;
+            commit("setCart", [...state.cart]);
+          }
+          console.log(cartID);
+        } else {
+          console.error(
+            "Error updating cart item quantity:",
+            response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error updating cart item quantity:", error);
+        throw error;
+      }
+    },
     async getProducts(context) {
       try {
         const response = await axios.get(`${dbConnection}products`);
@@ -106,7 +235,7 @@ export default createStore({
         console.error("Error fetching projects:", error);
       }
     },
-    async fetchUsers(context) {
+    async getUsers(context) {
       try {
         const response = await axios.get("http://localhost:5000/users");
         context.commit("setUsers", response.data);

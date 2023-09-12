@@ -87,7 +87,7 @@
            <router-link to="/products">Shop</router-link>
           </p>
           <p>
-            <router-link to="/account">Account</router-link>
+            <router-link to="/login">Account</router-link>
           </p>
           <p>
             <router-link to="/cart">Cart</router-link>

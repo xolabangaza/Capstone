@@ -23,6 +23,7 @@
         />
       </div>
       <div class="form-group">
+        
         <label for="gender">Gender:</label>
         <input type="text" id="gender" v-model="form.gender" class="input" />
       </div>

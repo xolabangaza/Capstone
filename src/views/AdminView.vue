@@ -23,7 +23,7 @@
       <button class="button" @click="submit()">Submit</button>
     </div>
 
-    <!-- Display Users using the UsersList.vue component -->
+  
     <UsersList :users="users" />
 
     <div class="text-center">
@@ -66,7 +66,7 @@
       </table>
     </div>
 
-    <!-- Other product-related code and components go here -->
+    
   </div>
 </template>
 
@@ -82,14 +82,14 @@ export default {
       return this.$store.state.products;
     },
 
-    users() {
-      return this.$store.state.users;
-    },
+    // users() {
+    //   return this.$store.state.users;
+    // },
   },
   mounted() {
-    // this.fetchUsers();
+   
     this.$store.dispatch("getProducts");
-    this.$store.dispatch("fetchUsers");
+    // this.$store.dispatch("getUsers");
   },
   data() {
     return {
@@ -105,14 +105,7 @@ export default {
     };
   },
   methods: {
-    async fetchUsers() {
-      try {
-        const response = await axios.get("http://localhost:5000/users");
-        this.users = response.data;
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    },
+    
     async editProduct() {
       try {
         const editedProduct = {
