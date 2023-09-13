@@ -96,10 +96,22 @@ export default createStore({
     },
   },
   actions: {
-    async getCart({ commit }) {
+    // async getCart({ commit }, usersID) {
+    //   try {
+    //     const response = await axios.get(`${dbConnection}cart`);
+    //     commit("setCart", response.data);
+    //   } catch (error) {
+    //     console.error("Error fetching cart:", error);
+    //   }
+    // },
+    async getCart({ commit }, userID) {
       try {
-        const response = await axios.get(`${dbConnection}cart`);
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        const response = await axios.get(`${dbConnection}cart/${userData.result.userID}`
+        );
         commit("setCart", response.data);
+        console.log(userData.result.userID);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching cart:", error);
       }

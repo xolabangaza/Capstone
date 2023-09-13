@@ -32,6 +32,30 @@
           </div>
           <div class="modal-body">
             <div>
+                   <table>
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Product Stock</th>
+                    <th>Product URL</th>
+                    <th>Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="product in myProjects" :key="product.productID">
+                    <td>{{ product.prodName }}</td>
+                    <td>{{ product.prodPrice }}</td>
+                    <td>{{ product.prodDesc }}</td>
+                    <td>{{ product.prodCat}}</td>
+                    <td>{{ product.prodType }}</td>
+                    <td>{{ product.prodImg }}</td>
+                    <td>
+                      <button @click="populateForm(product)">Edit</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <label>Product ID</label>
               <input
                 type="text"
@@ -79,6 +103,11 @@
 import axios from "axios";
 
 export default {
+     computed: {
+    Products() {
+      return this.$store.state.Products;
+    },
+     },
   data() {
     return {
       form: {

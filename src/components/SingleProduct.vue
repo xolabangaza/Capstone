@@ -83,66 +83,68 @@ export default {
   },
  methods: {
   async addToCartProduct() {
-    try {
-      if (this.isLoggedIn) {
-        // User is logged in, proceed with adding to cart
+      try {
         const userDataJSON = localStorage.getItem("userData");
         if (userDataJSON) {
           const userData = JSON.parse(userDataJSON);
           const userID = userData.result.userID;
+          console.log(userID);
+
           const product = {
-            prodID: this.product.prodID,
+            prodID: this.prodID,
             userID: userID,
             quantity: this.quantity,
           };
+          console.log(this.prodID);
+          console.log(this.quantity);
+
           const existingProductIndex = this.$store.state.cart.findIndex(
             (item) => item.prodID === product.prodID
           );
+
           if (existingProductIndex !== -1) {
-            const existingProduct = this.$store.state.cart[existingProductIndex];
+            const existingProduct =
+              this.$store.state.cart[existingProductIndex];
             await this.$store.dispatch("updateCartItem", {
               index: existingProductIndex,
               newQuantity: existingProduct.quantity + this.quantity,
             });
           } else {
-            await this.$store.dispatch("addToCartProduct", product);
+            await this.$store.dispatch("addToCart", product);
           }
+
           await this.$store.dispatch("getCart");
+
           Swal.fire({
             icon: "success",
             title: "Added to Cart",
             text: "The product has been added to your cart.",
           });
         } else {
-          console.error("User data not found in localStorage.");
+          Swal.fire({
+            icon: "error",
+            title: "Not Logged In",
+            text: "You need to log in to add products to your cart.",
+            confirmButtonText: "Log In",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.$router.push("/login"); 
+            }
+          });
         }
-      } else {
-        // User is not logged in, display the notification
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+
         Swal.fire({
-          icon: "info",
-          title: "Login Required",
-          text: "You must log in first to add items to your cart.",
-          showCancelButton: true,
-          confirmButtonText: "Log In",
-          cancelButtonText: "Cancel",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Redirect the user to the login page using Vue Router
-            this.$router.push({ name: "login" });
-          }
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while adding the product to your cart.",
         });
       }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "An error occurred while adding the product to your cart.",
-      });
-    }
+    },
   },
-},
-
   async created() {
     const prodID = this.$route.params.prodID;
     try {

@@ -5,6 +5,7 @@
         <tr>
           <th>Cart ID</th>
           <th>Product Name</th>
+          <th>Picture</th>
           <th>Price</th>
           <th>Quantity</th>
           <th>Total</th>
@@ -15,6 +16,11 @@
         <tr v-for="item in cart" :key="item.cartID" class="cart-card">
           <td>{{ item.cartID }}</td>
           <td>{{ item.prodNAME }}</td>
+         <td> <img
+          :src="item.prodIMG"
+          :alt="item.prodName" style="height: 7rem"/>
+          
+         </td>
           <td>R {{ item.prodPRICE }}.00</td>
           <td>
             <input
@@ -50,11 +56,8 @@ export default {
     cart() {
       return this.$store.state.cart;
     },
-  
-   mounted() {
-  this.$store.dispatch("getProducts");
   },
-
+  methods: {
     removeItem(cartID) {
       this.$store.dispatch("removeItem", cartID);
       console.log(cartID);
@@ -63,11 +66,11 @@ export default {
       this.$store.dispatch("updateCartItemQuantity", {
         cartID: item.cartID,
         prodID: item.prodID,
-        prodQUANTITY: item.prodQUANTITY,
+        quantity: item.prodQUANTITY,
       });
     },
   },
 };
-// }
 </script>
-<style scoped></style>
+<style scoped>
+</style>

@@ -58,6 +58,84 @@
               >
                 Edit
               </button>
+                   <!-- modal -->
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                      Update Product
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <label>Product Name</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.prodName"
+                    />
+                    <label>Product Price</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      v-model="form.prodPrice"
+                    />
+                    <label>Product Stock</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      v-model="form.prodDesc"
+                    />
+                    <label>Product Url</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.prodCat"
+                    />
+                    <label>Product Url</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.prodType"
+                    />
+                    <label>Product Category</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="form.prodImg"
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="editProduct()"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
               <button @click="deleteProduct(product.prodID)">Delete</button>
             </td>
@@ -81,16 +159,19 @@ export default {
     products() {
       return this.$store.state.products;
     },
-
-    users() {
-      return this.$store.state.users;
-    },
-  },
-  mounted() {
-   
+   },
+   mounted() {
+     this.$store.dispatch("getUsers")
     this.$store.dispatch("getProducts");
-    this.$store.dispatch("getUsers");
   },
+  //  name: "",
+  // props: {},
+ 
+  // mounted() {
+   
+  //   this.$store.dispatch("getProducts");
+  //   this.$store.dispatch("getUsers");
+  // },
   data() {
     return {
       form: {
@@ -302,7 +383,7 @@ td {
       display: flex;
       flex-direction: column;
       width: 80px;
-      margin: auto; /* Center-align buttons */
+      margin: auto; 
     }
     thead {
       display: none;

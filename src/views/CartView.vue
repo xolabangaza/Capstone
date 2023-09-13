@@ -3,12 +3,12 @@
     <div v-if="cartItems.length > 0" class="row p-4 justify-content-evenly">
       <cart />
     </div>
-    <div v-else>Cart is empty.</div>
+    <div class="ju" v-else>Cart is empty.</div>
   </div>
 </template>
 
 <script>
-import cart from "../components/Cart.vue";
+import cart from "../components/cart.vue";
 export default {
   computed: {
     allCart() {
@@ -26,3 +26,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.ju{
+  color: blueviolet;
+}
+  
+</style>
