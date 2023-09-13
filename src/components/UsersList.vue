@@ -1,56 +1,38 @@
 <template>
   <div class="text-center">
     <h2>Users</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>User ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Gender</th>
-          <th>Date of Birth</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>User Role</th>
-          <th>Profile URL</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.userID">
-          <td>{{ user.userID }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.gender }}</td>
-          <td>{{ user.userDOB }}</td>
-          <td>{{ user.emailAdd }}</td>
-          <td>{{ user.userPass }}</td>
-          <td>{{ user.userRole }}</td>
-          <td><img :src="user.profileUrl" :alt="user.firstName" /></td>
-          <td>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="populateForm(user)"
-              >
-                Edit
-              </button>
-
-              <button @click="deleteUser(user.userID)">Delete</button>
-            </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col-md-4" v-for="user in users" :key="user.userID">
+        <div class="card">
+          <img :src="user.profileUrl" class="card-img-top" :alt="user.firstName" />
+          <div class="card-body">
+            <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
+            <p class="card-text">{{ user.emailAdd }}</p>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              @click="populateForm(user)"
+            >
+              Edit
+            </button>
+            <button @click="deleteUser(user.userID)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   computed: {
        users() {
       return this.$store.state.users;
     },
+    
   },
   mounted() {
      this.$store.dispatch("getUsers");

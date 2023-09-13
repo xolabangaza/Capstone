@@ -23,7 +23,7 @@
         />
       </div>
       <div class="form-group">
-        
+
         <label for="gender">Gender:</label>
         <input type="text" id="gender" v-model="form.gender" class="input" />
       </div>
@@ -167,7 +167,16 @@ h2{
 p{
   color: #83168f;
 }
+ @media screen and (max-width: 760px) {
+    .registration {
+      max-width: 95%; 
+      padding: 1rem; 
+    }
 
+    button {
+      width: 100%; 
+    }
+  }
 </style>
 
 

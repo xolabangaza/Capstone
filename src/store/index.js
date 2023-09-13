@@ -61,6 +61,9 @@ export default createStore({
       state.user = user;
       state.isLoggedIn = true;
     },
+    setLoggedIn(state, isLoggedIn) {
+      state.isLoggedIn = isLoggedIn;
+    },
     setToken(state, token) {
       state.token = token;
     },
@@ -204,17 +207,17 @@ export default createStore({
         console.error("Error fetching products:", error);
       }
     },
-    async getUsers(context) {
-      try {
-        const response = await axios.get("http://localhost:5000/users");
-        // Return the response data
-        context.commit("setUsers", response.data);
-        // return response.data;
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        throw error; // Rethrow the error to handle it in the component
-      }
-    },
+    // async getUsers(context) {
+    //   try {
+    //     const response = await axios.get("http://localhost:5000/users");
+    //     // Return the response data
+    //     context.commit("setUsers", response.data);
+    //     // return response.data;
+    //   } catch (error) {
+    //     console.error("Error fetching users:", error);
+    //     throw error; 
+    //   }
+    // },
     async fetchProductDetails(context, productID) {
       try {
         const response = await axios.get(
@@ -311,6 +314,7 @@ async addItem({ commit, state }, product) {
         console.log(token);
         commit("setToken", token);
         commit("setUser", user);
+        commit('setLoggedIn', true);
         // Store user data in local storage
         localStorage.setItem("userToken", token);
         localStorage.setItem("userData", JSON.stringify(response.data));
@@ -340,6 +344,7 @@ async addItem({ commit, state }, product) {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
     commit("clearUser");
+    commit('setLoggedIn', false);
     window.location.reload();
   },
 

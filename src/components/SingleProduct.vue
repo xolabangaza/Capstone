@@ -10,20 +10,21 @@
         <h6> {{ product.prodCat }}</h6>
         <h6>{{ product.prodType }}</h6>
         <h5>R {{ product.prodPrice }}</h5>
-      <div class="size-color-single">
+        
+        <div class="size-color-single">
           <label>Size</label>
           <select name="product-size">
-              <option value="1">XXL</option>
-              <option value="2">XL</option>
-              <option value="3">L</option>
-              <option value="4">M</option>
-              <option value="5">S</option>
+            <option value="1">XXL</option>
+            <option value="2">XL</option>
+            <option value="3">L</option>
+            <option value="4">M</option>
+            <option value="5">S</option>
           </select>
-      </div>
+        </div>
         <button @click="addToCartProduct">AddToCart</button>
-        
       </div>
-      
+    </div>
+  
     </div>
     <h3 class="text-center">You may also like</h3>
         <div class="products">
@@ -55,20 +56,17 @@
         <p class="price">R859.99</p>
       </div>
     </div>
-  </div>
-    
-    <!-- <div v-else>Loading...</div> -->
-  <!-- </div> -->
+      
 </template>
 
 <script>
 import Swal from "sweetalert2";
+
 export default {
-  // props: ["product"],
   data() {
     return {
       error: null,
-       prodID: this.$route.params.prodID,
+      prodID: this.$route.params.prodID,
       quantity: 1,
     };
   },
@@ -76,13 +74,18 @@ export default {
     product() {
       return this.$store.state.product;
     },
-     cart() {
+    cart() {
       return this.$store.state.cart;
     },
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
   },
-  methods: {
-       async addToCartProduct() {
-      try {
+ methods: {
+  async addToCartProduct() {
+    try {
+      if (this.isLoggedIn) {
+        // User is logged in, proceed with adding to cart
         const userDataJSON = localStorage.getItem("userData");
         if (userDataJSON) {
           const userData = JSON.parse(userDataJSON);
@@ -102,7 +105,7 @@ export default {
               newQuantity: existingProduct.quantity + this.quantity,
             });
           } else {
-            await this.$store.dispatch("addToCart", product);
+            await this.$store.dispatch("addToCartProduct", product);
           }
           await this.$store.dispatch("getCart");
           Swal.fire({
@@ -113,16 +116,33 @@ export default {
         } else {
           console.error("User data not found in localStorage.");
         }
-      } catch (error) {
-        console.error("Error adding to cart:", error);
+      } else {
+        // User is not logged in, display the notification
         Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "An error occurred while adding the product to your cart.",
+          icon: "info",
+          title: "Login Required",
+          text: "You must log in first to add items to your cart.",
+          showCancelButton: true,
+          confirmButtonText: "Log In",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirect the user to the login page using Vue Router
+            this.$router.push({ name: "login" });
+          }
         });
       }
-    },
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while adding the product to your cart.",
+      });
+    }
   },
+},
+
   async created() {
     const prodID = this.$route.params.prodID;
     try {
@@ -131,15 +151,6 @@ export default {
       this.error = "Product not found";
     }
   },
-
-  // async created() {
-  //   const prodID = this.$route.params.prodID;
-  //   try {
-  //     await this.$store.dispatch('getProduct', prodID);
-  //   } catch (error) {
-  //     this.error = 'Product not found';
-  //   }
-  // },
 };
 </script>
 
@@ -190,24 +201,24 @@ select{
  .products {
       display: flex;
       flex-direction: row;
-      /* align-items: center; */
       gap: 20px;
   }
  .column {
-      /* display: flex;
-      flex-direction: row; */
-      /* align-items: center; */
       padding: 20px;
+  }
+  .msg{
+    color: #db599a;
+    font-size: 30px;
+    background-color: #d8c7cf;
+    width: 90px;
   }
  .pic {
       max-width: 100%;
       height: auto;
   }
  h4 {
-      /* margin: 10px 0; */
       color: #db599a;
       margin-top: 20px;
-      /* margin-right: 200px; */
   }
   .price {
       font-weight: bold;
@@ -217,4 +228,43 @@ select{
   width: 200px;
   height: 300px;
 }
+
+
+  @media screen and (max-width: 760px) {
+    img {
+      width: 80%; /* Adjust as needed */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .product-info {
+      width: 80%; /* Adjust as needed */
+    }
+
+    button {
+      width: 100%; /* Make the button full width */
+    }
+
+    select {
+      width: 100%; /* Make the select element full width */
+    }
+
+    .products {
+      flex-direction: column; /* Stack products vertically */
+      gap: 10px; /* Adjust spacing between products */
+    }
+
+    .column {
+      padding: 10px; /* Adjust padding for columns */
+    }
+
+    h4 {
+      margin-top: 10px; /* Adjust margin for headings */
+      margin-right: 0; /* Reset right margin */
+    }
+
+    .pic {
+      width: 100%; /* Make images full width */
+      height: auto; /* Maintain aspect ratio */
+    }
+  }
 </style>

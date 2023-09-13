@@ -33,7 +33,7 @@
             >
               Remove
             </button>
-                    <router-link class="nav-link" to="/checkout">Checkout</router-link>
+            <router-link class="nav-link" to="/checkout">Checkout</router-link>
           </td>
         </tr>
       </tbody>
@@ -45,16 +45,16 @@
 </template>
 <script>
 export default {
-  props: ["cart"],
+  props: ["cartItems"],
   computed: {
     cart() {
       return this.$store.state.cart;
     },
+  
+   mounted() {
+  this.$store.dispatch("getProducts");
   },
-  methods: {
-    mounted() {
-      this.$store.dispatch("getProducts");
-    },
+
     removeItem(cartID) {
       this.$store.dispatch("removeItem", cartID);
       console.log(cartID);

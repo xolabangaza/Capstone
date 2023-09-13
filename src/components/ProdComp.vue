@@ -258,11 +258,30 @@ export default {
 .todler{
   text-decoration: none;
 }
-
-@media (max-width: 700px) {
-  .card {
-    width: 100%;
-    margin: 20px 0;
-  }
+label{
+  color: #d01889;
 }
+
+ 
+  @media (max-width: 760px) {
+    .filters {
+      width: 80%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .input{
+      width: 40%;
+    }
+   
+
+    .sort-container,
+    .filter-container,
+    .search-container {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+  .button{
+    width: 45%;
+  }
 </style>

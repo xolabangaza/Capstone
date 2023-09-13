@@ -130,4 +130,21 @@ button[type="submit"]:hover {
 p{
     color: #83168f;
 }
+ @media screen and (max-width: 760px) {
+    form {
+      max-width: 90%; 
+      padding: 1rem; 
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%; 
+      margin-left: 0;
+    }
+
+    button[type="submit"] {
+      width: 100%; 
+      margin-left: 0; 
+    }
+  }
 </style>
