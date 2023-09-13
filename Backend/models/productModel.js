@@ -31,8 +31,8 @@ const insertProduct = (data, result) => {
     });
 }
 const updateProductById = (data, id, result) => {
-    db.query("UPDATE Products SET prodNAME = ?, prodPRICE = ?, prodDESC = ?, prodCAT = ?, prodTYPE = ?, prodSEASON = ?, prodIMG = ? WHERE prodID = ?",
-        [data.prodNAME, data.prodPRICE, data.prodDESC, data.prodCAT, data.prodTYPE, data.prodSEASON, data.prodIMG, id],
+    db.query("UPDATE Products SET prodNAME = ?, prodPRICE = ?, prodDESC = ?, prodCAT = ?, prodTYPE = ?, prodIMG = ? WHERE prodID = ?",
+        [data.prodNAME, data.prodPRICE, data.prodDESC, data.prodCAT, data.prodTYPE, data.prodIMG, id],
         (err, results) => {
             if(err) {
                 console.log(err);

@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser')
 const {verifyAToken} = require('../middleware/AuthenticateUser')
 const router = express.Router()
+const CartController =  require("../controllers/Cart")
 const productController = require("../controllers/Product");
 const Users = require('../models/user');
 const users = new Users();
@@ -51,5 +52,23 @@ router.post("/products", createProduct);
 router.patch("/products/:id", updateProduct);
 // Delete Product
 router.delete("/products/:id", deleteProduct);
+
 // export default router
+const {
+    showCart,
+    showCartById,
+    createCart,
+    updateCart,
+    deleteCart,
+  } = CartController;
+  // Get All Cart
+  router.get("/cart/:userID", showCart);
+  // Get Single Cart
+  router.get("/cart/:id", showCartById);
+  // Create New Cart
+  router.post("/cart", createCart);
+  // Update Cart
+  router.patch("/cart/:id", updateCart);
+  // Delete Cart
+  router.delete("/cart/:id", deleteCart);
 module.exports = {router, verifyAToken};
