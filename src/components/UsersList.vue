@@ -27,6 +27,7 @@
 
 <script>
 import axios from "axios";
+const dbConnection = "https://backend-i8zg.onrender.com/";
 export default {
   computed: {
        users() {
@@ -40,6 +41,7 @@ export default {
 data() {
     return {
       form: {
+        userID: "",
         firstName: "",
         lastName: "",
         gender: "",
@@ -55,7 +57,7 @@ data() {
   methods: {
      async fetchUsers() {
       try {
-        const response = await axios.get("http://localhost:5000/users");
+        const response = await axios.get(`${dbConnection}Users`);
         this.users = response.data;
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -74,7 +76,7 @@ data() {
           profileUrl: this.form.profileUrl,
         };
         const response = await axios.patch(
-          `http://localhost:5000/users/${this.form.userID}`,
+          `${dbConnection}users/${this.form.userID}`,
           editedUser
         );
         alert("User updated successfully");
@@ -109,7 +111,7 @@ data() {
     async deleteUser(userID) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/users/${userID}`
+          `${dbConnection}users/${userID}`,
         );
         alert("User deleted successfully");
         this.$store.dispatch("getUsers");
@@ -132,7 +134,7 @@ data() {
         };
 
         const response = await axios.post(
-          "http://localhost:5000/users",
+          `${dbConnection}users`,
           newUser
         );
 

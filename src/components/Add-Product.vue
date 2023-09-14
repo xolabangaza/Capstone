@@ -62,7 +62,7 @@
 
 <script>
 import axios from "axios";
-
+const dbConnection = "https://backend-i8zg.onrender.com/";
 export default {
   name: "HelloWorld",
   // computed: {
@@ -93,10 +93,10 @@ export default {
     async submit() {
       try {
         if (this.form.prodID) {
-          await axios.put(`/products/${this.form.prodID}`, this.form);
+          await axios.put(`${dbConnection}products/${this.form.prodID}`, this.form);
           alert("Product updated successfully");
         } else {
-          await axios.post("/productsAdd", this.form);
+          await axios.post(`${dbConnection}productsAdd`, this.form);
           alert("Product added successfully");
         }
         this.resetForm();
@@ -126,7 +126,7 @@ export default {
 
     async deleteProduct(prodID) {
       try {
-        await axios.delete(`/products/${prodID}`);
+        await axios.delete(`${dbConnection}/products/${prodID}`);
         alert("Product deleted successfully");
         this.$store.dispatch("getProducts");
       } catch (error) {
@@ -143,7 +143,7 @@ export default {
           prodType: this.form.prodType,
           prodImg: this.form.prodImg,
         };
-        await axios.patch(`/${this.form.prodID}`, editedProduct);
+        await axios.patch(`${dbConnection}products/${this.form.prodID}`, editedProduct);
         alert("Product updated successfully");
         this.$store.dispatch("getProducts");
         this.resetForm();

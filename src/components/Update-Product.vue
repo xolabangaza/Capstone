@@ -7,16 +7,15 @@
     >
       Edit
     </button>
-<div
-  class="modal fade"
-  id="exampleModal"  
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-
+    <div
+      class="modal fade"
+      id="exampleModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -32,7 +31,7 @@
           </div>
           <div class="modal-body">
             <div>
-                   <table>
+              <table>
                 <thead>
                   <tr>
                     <th>Product Name</th>
@@ -47,7 +46,7 @@
                     <td>{{ product.prodName }}</td>
                     <td>{{ product.prodPrice }}</td>
                     <td>{{ product.prodDesc }}</td>
-                    <td>{{ product.prodCat}}</td>
+                    <td>{{ product.prodCat }}</td>
                     <td>{{ product.prodType }}</td>
                     <td>{{ product.prodImg }}</td>
                     <td>
@@ -101,13 +100,14 @@
 
 <script>
 import axios from "axios";
+const dbConnection = "https://backend-i8zg.onrender.com/";
 
 export default {
-     computed: {
+  computed: {
     Products() {
       return this.$store.state.Products;
     },
-     },
+  },
   data() {
     return {
       form: {
@@ -143,7 +143,7 @@ export default {
         };
 
         const response = await axios.patch(
-          `http://localhost:5000/products/${this.form.prodID}`,
+          `${dbConnection}products/${this.form.prodID}`,
           editedProduct
         );
 

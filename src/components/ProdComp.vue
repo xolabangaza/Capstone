@@ -67,6 +67,7 @@ export default {
     return {
       selectedCategory: "",
       searchQuery: "",
+       sortOrder: "",
     };
   },
   computed: {
@@ -107,11 +108,11 @@ export default {
     },
 
     filterProducts() {
-      // This method already updates the filteredProducts computed property.
+      
     },
 
     searchProducts() {
-      // This method already updates the filteredProducts computed property.
+    
     },
   },
 };

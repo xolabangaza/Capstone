@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
-const dbConnection = "http://localhost:5000/";
+const dbConnection = "https://backend-i8zg.onrender.com/";
 import Swal from 'sweetalert2'
 export default createStore({
   state: {
@@ -256,7 +256,7 @@ export default createStore({
     },
     async getUsers(context) {
       try {
-        const response = await axios.get("http://localhost:5000/users");
+        const response = await axios.get(`${dbConnection}users`);
         context.commit("setUsers", response.data);
       } catch (error) {
         console.error("Error fetching users:", error);

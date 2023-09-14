@@ -99,7 +99,18 @@ export default {
       try {
         const response = await this.$store.dispatch("registerUser", this.form);
         console.log(response);
-        this.$router.push("/login");
+         if (response.success) {
+            this.$router.push("/login");
+         } else {
+        
+        if (response.message === "DuplicateEmail") {
+          this.registrationError = "Email address is already in use.";
+        } else {
+          this.registrationError =
+            "Registration failed. Please check your inputs and try again.";
+        }
+         }
+        
       } catch (error) {
         this.registrationError =
           "Registration failed. Please check your inputs and try again.";

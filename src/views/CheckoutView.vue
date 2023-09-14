@@ -39,9 +39,8 @@ export default {
       // Clear the cart by dispatching an action
       this.$store.dispatch("clearCart");
 
-      // You can also perform other order-related actions here, such as sending the order to a server or navigating to a thank you page.
 
-      // For example, navigate to a thank you page:
+      
       this.$router.push("/products");
     },
   },
@@ -51,7 +50,6 @@ export default {
 
 
 <style scoped>
-/* Checkout page styles */
 .checkout-title {
   font-size: 24px;
   margin-bottom: 20px;
