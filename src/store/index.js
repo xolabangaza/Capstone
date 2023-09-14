@@ -12,12 +12,16 @@ export default createStore({
     token: null,
     isLoggedIn: false,
     cart: [],
+    userRole: null,
   },
 
   mutations: {
     //CART
   setCart(state, cart) {
     state.cart = cart;
+  },
+  setUserRole(state, userRole) {
+    state.userRole = userRole;
   },
   // addToCart(state, product) {
   //   state.cart.push(product);
@@ -326,11 +330,14 @@ async addItem({ commit, state }, product) {
         console.log(token);
         commit("setToken", token);
         commit("setUser", user);
+        console.log("User Role:", response.data.userRole);
+        // console.log("Response Data:", response.data);
+        commit("setUserRole", response.data.result.userRole);
         commit('setLoggedIn', true);
         // Store user data in local storage
         localStorage.setItem("userToken", token);
         localStorage.setItem("userData", JSON.stringify(response.data));
-        window.location.reload();
+        // window.location.reload();
         Swal.fire({
           icon: "success",
           title: "Login Successful",
@@ -356,6 +363,7 @@ async addItem({ commit, state }, product) {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
     commit("clearUser");
+    commit("setUserRole", null);
     commit('setLoggedIn', false);
     window.location.reload();
   },

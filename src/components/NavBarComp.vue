@@ -26,7 +26,7 @@
               <router-link class="nav-link" to="/about">About</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin">Admin</router-link>
+              <router-link class="nav-link" v-if="userRole === 'Admin'" to="/admin">Admin</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/contact">Contact</router-link>
@@ -43,6 +43,9 @@
              <router-link class="nav-link" to="/cart" @click="toggleCart">
                <i class="fas fa-shopping-cart"  style="color: #d537d7"></i>
              </router-link>
+              <button @click="toggleCart" class="nav-link" to="/cart">
+            <i class="fas fa-shopping-cart"  style="color: #d537d7"></i>
+          </button>
           </li>
         </div>
       </div>
@@ -70,6 +73,7 @@ isLoggedIn() {
       }
       return "";
     },
+    
     userLastName() {
       const userDataJSON = localStorage.getItem("userData");
       if (userDataJSON) {
@@ -77,6 +81,9 @@ isLoggedIn() {
         return userData.result.lastName || "";
       }
       return "";
+    },
+    userRole() {
+      return this.$store.state.userRole;
     },
   },
   methods: {
@@ -87,6 +94,12 @@ isLoggedIn() {
       window.location.reload();
     },
   },
+   toggleCart() {
+      const cartOffCanvas = new bootstrap.Offcanvas(
+        document.getElementById("cartOffCanvas")
+      );
+      cartOffCanvas.toggle();
+    },
 };
 </script>
 
