@@ -202,6 +202,7 @@ export default {
         alert("Product deleted successfully");
         this.$store.dispatch("getProducts");
         $("#deleteConfirmationModal").modal("hide");
+        this.deleteProductId = null; // Reset the deleteProductId after successful deletion
       } catch (error) {
         console.error("Error deleting product:", error);
       }
@@ -236,8 +237,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style scoped>
 .just {
@@ -316,46 +315,47 @@ td {
   border-collapse: collapse;
   width: 100%;
 }
-  @media screen and (max-width: 760px) {
-    input {
-      width: 70%;
-      font-size: 14px;
-    }
-    .btn{
-      width: 40%; 
-      font-size: 10px;
-      flex-direction: column;
-    }
-    form {
-      padding: 20px;
-    }
-    h2 {
-      font-size: 28px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    label {
-      font-size: 12px;
-      margin-top: 3px;
-    }
-    table {
-      font-size: 10px;
-    }
-    th, td {
-      padding: 5px;
-    }
-    img {
-      width: 70px;
-      height: 80px;
-    }
-   button {
-      display: flex;
-      flex-direction: column;
-      width: 80px;
-      margin: auto; 
-    }
-    thead {
-      display: none;
-    }
+@media screen and (max-width: 760px) {
+  input {
+    width: 70%;
+    font-size: 14px;
   }
+  .btn {
+    width: 40%;
+    font-size: 10px;
+    flex-direction: column;
+  }
+  form {
+    padding: 20px;
+  }
+  h2 {
+    font-size: 28px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  label {
+    font-size: 12px;
+    margin-top: 3px;
+  }
+  table {
+    font-size: 10px;
+  }
+  th,
+  td {
+    padding: 5px;
+  }
+  img {
+    width: 70px;
+    height: 80px;
+  }
+  button {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    margin: auto;
+  }
+  thead {
+    display: none;
+  }
+}
 </style>
