@@ -208,6 +208,10 @@ h3{
   text-decoration: none;
   border-radius: 5px;
 }
+.explore-button:hover{
+  color: #ed0bc7;
+}
+
 
 .featured-section {
   padding: 50px 0;

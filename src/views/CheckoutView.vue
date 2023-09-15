@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="checkout-title">Checkout</h2>
+    <h2 class="checkout-title text-center">Checkout</h2>
     <table class="table checkout-table">
       <thead>
         <tr>
@@ -20,7 +20,7 @@
       </tbody>
     </table>
     <p class="checkout-total">Total Price: R {{ totalCartPrice }}.00</p>
-    <button class="btn btn-primary place-order-btn" @click="placeOrder">Place Order</button>
+    <button class="btn place-order-btn" @click="placeOrder">Place Order</button>
   </div>
 </template>
 
@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     placeOrder() {
-      // Clear the cart by dispatching an action
       this.$store.dispatch("clearCart");
 
 
@@ -57,15 +56,19 @@ export default {
 }
 
 .checkout-table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
+  margin-left: 120px;
+  
 }
 
 .checkout-table th,
 .checkout-table td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  background-color: palevioletred;
+  border-radius: 10px;
+  
 }
 
 .checkout-item:hover {
@@ -75,11 +78,19 @@ export default {
 .checkout-total {
   font-size: 18px;
   margin-top: 20px;
+  margin-left: 120px;
   font-weight: bold;
   color: purple;
 }
 
 .place-order-btn {
   margin-top: 20px;
+  margin-left: 120px;
+  background-color: pink;
+  color: #bd33d5;
+}
+.place-order-btn:hover{
+  background-color: #bd33d5;
+  color: wheat;
 }
 </style>

@@ -140,5 +140,9 @@ a.text-reset{
 router-link {
   text-decoration: none;
 }
+.text-reset:hover{
+  background-color: rgb(162, 21, 129);
+}
+
     
 </style>

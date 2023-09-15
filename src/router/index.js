@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SingleProduct from '../components/SingleProduct.vue'
+import userProfile from "../views/UserProfile.vue";
+
 
 
 const routes = [
@@ -57,10 +59,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/CartView.vue'),
   },
   {
+    path: "/UserProfile",
+    name: "userProfile",
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserProfile.vue')
+  },
+  {
+    path: "/Users",
+    name: "Users",
+    component: () => import(/* webpackChunkName: "about" */ '../views/Users.vue')
+  },
+
+  {
     path: "/SingleProduct/:prodID",
     name: "SingleProduct",
     component: SingleProduct,
   },
+  
 
 
 ]

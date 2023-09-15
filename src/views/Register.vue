@@ -87,7 +87,7 @@ export default {
         userRole: "",
         emailAdd: "",
         userPass: "",
-        profileUrl: "",
+        profileUrl: "https://i.postimg.cc/LXrv2SXw/146-1468479-my-profile-icon-blank-profile-picture-circle-hd.png",
       },
       registrationError: null,
     };

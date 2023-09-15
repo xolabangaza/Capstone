@@ -25,11 +25,17 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/about">About</router-link>
             </li>
+            <!-- <li class="nav-item">
+              <router-link class="nav-link" to="/UserProfile">Profile</router-link>
+            </li> -->
             <li class="nav-item">
-              <router-link class="nav-link" v-if="userRole === 'Admin'" to="/admin">Admin</router-link>
+              <router-link class="nav-link" v-show="!Logged" to="/admin">Admin</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/contact">Contact</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/Users">Users</router-link>
             </li>
           </ul>
           <li class="nav-items">
@@ -39,18 +45,19 @@
              <button v-else @click="logout">Logout</button>
           </li>
           <li class="nav-items">
-               <!-- Cart Icon/Button to Open Cart -->
+                <router-link class="nav-link" to="/UserProfile"><img src="https://i.postimg.cc/LXrv2SXw/146-1468479-my-profile-icon-blank-profile-picture-circle-hd.png"  class="img" alt=""></router-link>
              <router-link class="nav-link" to="/cart" @click="toggleCart">
                <i class="fas fa-shopping-cart"  style="color: #d537d7"></i>
              </router-link>
-              <button @click="toggleCart" class="nav-link" to="/cart">
+              <!-- <button @click="toggleCart" class="nav-link" to="/cart">
             <i class="fas fa-shopping-cart"  style="color: #d537d7"></i>
-          </button>
+          </button> -->
           </li>
         </div>
       </div>
     <div v-if="isLoggedIn">
-      <p>Welcome back {{ userFirstName }} {{ userLastName }}</p>
+      <!-- <p>Welcome back {{ userFirstName }} {{ userLastName }}</p> -->
+
     </div>
     </nav>
   </div>
@@ -63,6 +70,10 @@ isLoggedIn() {
       // Check if the user is logged in
       const userDataJSON = localStorage.getItem("userData");
       return !!userDataJSON;
+    },
+    isLogged(){
+      console.log(!this.user.result == " ");
+      return this.user.result == " ";
     },
     userFirstName() {
       // Get the user's first name from localStorage
@@ -85,6 +96,7 @@ isLoggedIn() {
     userRole() {
       return this.$store.state.userRole;
     },
+   
   },
   methods: {
     logout() {
@@ -121,12 +133,16 @@ isLoggedIn() {
 .nav-link {
   color: white;
 }
-
+.img{
+  width: 40px;
+  border-radius: 40%;
+}
 .navbar-brand {
   color: white;
   font-size: 30px;
   font-weight: 400;
   font-style: italic;
+  
 }
 
 .nav-item {
@@ -141,7 +157,7 @@ isLoggedIn() {
   /* margin: 0; */
   /* padding: 0; */
   display: flex;
-  margin-left: 60px;
+  margin-left: 2px;
   font-size: 1.4rem;
   color: white;
 }

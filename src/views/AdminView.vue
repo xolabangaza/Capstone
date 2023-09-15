@@ -151,10 +151,10 @@
 <script>
 import axios from "axios";
 import SingleUpdateProductModal from "../components/Update-Product.vue";
-import UsersList from "@/components/UsersList.vue";
+
 
 export default {
-  components: { SingleUpdateProductModal, UsersList },
+  components: { SingleUpdateProductModal},
   computed: {
     products() {
       return this.$store.state.products;
@@ -164,14 +164,7 @@ export default {
      this.$store.dispatch("getUsers")
     this.$store.dispatch("getProducts");
   },
-  //  name: "",
-  // props: {},
- 
-  // mounted() {
-   
-  //   this.$store.dispatch("getProducts");
-  //   this.$store.dispatch("getUsers");
-  // },
+  
   data() {
     return {
       form: {
@@ -182,7 +175,7 @@ export default {
         prodType: "",
         prodImg: "",
       },
-      // users: [],
+  
     };
   },
   methods: {
