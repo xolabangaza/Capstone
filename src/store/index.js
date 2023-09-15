@@ -223,17 +223,7 @@ export default createStore({
         console.error("Error fetching products:", error);
       }
     },
-    // async getUsers(context) {
-    //   try {
-    //     const response = await axios.get("http://localhost:5000/users");
-    //     // Return the response data
-    //     context.commit("setUsers", response.data);
-    //     // return response.data;
-    //   } catch (error) {
-    //     console.error("Error fetching users:", error);
-    //     throw error; 
-    //   }
-    // },
+
     async fetchProductDetails(context, productID) {
       try {
         const response = await axios.get(
@@ -262,7 +252,7 @@ export default createStore({
         console.error("Error fetching users:", error);
       }
     },
-    // Function for adding item on the store
+    
 async addItem({ commit, state }, product) {
   try {
     const existingProduct = state.items.find((item) => item.prodID === product.prodID);
@@ -337,7 +327,7 @@ async addItem({ commit, state }, product) {
         // Store user data in local storage
         localStorage.setItem("userToken", token);
         localStorage.setItem("userData", JSON.stringify(response.data));
-        // window.location.reload();
+        window.location.reload();
         Swal.fire({
           icon: "success",
           title: "Login Successful",

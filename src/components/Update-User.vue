@@ -100,7 +100,7 @@
 
 <script>
 import axios from "axios";
-
+const dbConnection = "https://backend-i8zg.onrender.com/";
 export default {
   data() {
     return {
@@ -143,7 +143,7 @@ export default {
         };
 
         const response = await axios.patch(
-          `http://localhost:5000/users/${this.form.userID}`,
+          `${dbConnection}users/${this.form.userID}`,
           editedUser
         );
 

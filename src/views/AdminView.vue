@@ -151,7 +151,7 @@
 <script>
 import axios from "axios";
 import SingleUpdateProductModal from "../components/Update-Product.vue";
-
+const dbConnection = "https://backend-i8zg.onrender.com/";
 
 export default {
   components: { SingleUpdateProductModal},
@@ -191,7 +191,7 @@ export default {
           prodImg: this.form.prodImg,
         };
         const response = await axios.patch(
-          `http://localhost:5000/products/${this.form.prodID}`,
+          `${dbConnection}products/${this.form.prodID}`,
           editedProduct
         );
         alert("Product updated successfully");
@@ -222,7 +222,7 @@ export default {
     async deleteProduct(prodID) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/products/${prodID}`
+          `${dbConnection}products/${prodID}`
         );
         alert("Product deleted successfully");
         this.$store.dispatch("getProducts");
@@ -243,7 +243,7 @@ export default {
         };
 
         const response = await axios.post(
-          "http://localhost:5000/products",
+          `${dbConnection}products`,
           newProduct
         );
 

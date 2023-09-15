@@ -53,7 +53,7 @@ export default {
           const userData = response.data;
           localStorage.setItem("userData", JSON.stringify(userData));
           this.$router.push("/");
-          window.location.reload();
+          // window.location.reload();
         } else {
           this.$router.push("/");
           console.log(response);
