@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import Spinner from "@/components/Spinner.vue"
 export default {
   data() {
     return {
@@ -132,6 +133,7 @@ export default {
       // Redirect to a logout or home page
     },
   },
+    components: {Spinner,}
 };
 </script>
 

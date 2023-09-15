@@ -125,6 +125,8 @@
 
 <script>
 import axios from "axios";
+import Spinner from "@/components/Spinner.vue"
+
 
 export default {
   data() {
@@ -197,7 +199,7 @@ export default {
         axios
           .delete(`${baseUrl}user/${userID}`)
           .then((response) => {
-            if (response.status === 204) {
+            if (response.status === 200) {
               
               this.fetchUsers();
             } else {
@@ -211,6 +213,7 @@ export default {
           });
       }
     },
+      components: {Spinner },
 }
 
 </script>

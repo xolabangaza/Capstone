@@ -23,7 +23,6 @@
       <button class="button" @click="submit()">Submit</button>
     </div>
 
-  
     <UsersList :users="users" />
 
     <div class="text-center">
@@ -53,118 +52,85 @@
                 type="button"
                 class="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#editModal"
                 @click="populateForm(product)"
               >
                 Edit
               </button>
-                   <!-- modal -->
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      Update Product
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <label>Product Name</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="form.prodName"
-                    />
-                    <label>Product Price</label>
-                    <input
-                      class="form-control"
-                      type="number"
-                      v-model="form.prodPrice"
-                    />
-                    <label>Product Stock</label>
-                    <input
-                      class="form-control"
-                      type="number"
-                      v-model="form.prodDesc"
-                    />
-                    <label>Product Url</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="form.prodCat"
-                    />
-                    <label>Product Url</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="form.prodType"
-                    />
-                    <label>Product Category</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="form.prodImg"
-                    />
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      @click="editProduct()"
-                    >
-                      Update
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-              <button @click="deleteProduct(product.prodID)">Delete</button>
+              <button
+                class="btn btn-danger"
+                @click="showDeleteConfirmation(product.prodID)"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    
+    <!-- Edit Product Modal -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <!-- Edit modal content -->
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      class="modal fade"
+      id="deleteConfirmationModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Confirm Deletion
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this product?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="deleteProduct()"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import SingleUpdateProductModal from "../components/Update-Product.vue";
 const dbConnection = "https://backend-i8zg.onrender.com/";
 
 export default {
-  components: { SingleUpdateProductModal},
-  computed: {
-    products() {
-      return this.$store.state.products;
-    },
-   },
-   mounted() {
-     this.$store.dispatch("getUsers")
-    this.$store.dispatch("getProducts");
-  },
-  
   data() {
     return {
       form: {
@@ -175,11 +141,15 @@ export default {
         prodType: "",
         prodImg: "",
       },
-  
+      deleteProductId: null,
     };
   },
+  computed: {
+    products() {
+      return this.$store.state.products;
+    },
+  },
   methods: {
-    
     async editProduct() {
       try {
         const editedProduct = {
@@ -197,7 +167,7 @@ export default {
         alert("Product updated successfully");
         this.$store.dispatch("getProducts");
         this.resetForm();
-        $("#exampleModal").modal("hide");
+        $("#editModal").modal("hide");
       } catch (error) {
         console.error("Error editing product:", error);
       }
@@ -219,14 +189,19 @@ export default {
       this.form.prodType = product.prodType;
       this.form.prodImg = product.prodImg;
     },
-    async deleteProduct(prodID) {
+    showDeleteConfirmation(prodID) {
+      this.deleteProductId = prodID;
+      $("#deleteConfirmationModal").modal("show");
+    },
+    async deleteProduct() {
       try {
+        const prodID = this.deleteProductId;
         const response = await axios.delete(
           `${dbConnection}products/${prodID}`
         );
         alert("Product deleted successfully");
         this.$store.dispatch("getProducts");
-        window.location.reload();
+        $("#deleteConfirmationModal").modal("hide");
       } catch (error) {
         console.error("Error deleting product:", error);
       }
@@ -251,7 +226,6 @@ export default {
           alert("Product added successfully");
           this.$store.dispatch("getProducts");
           this.resetForm();
-          window.location.reload();
         } else {
           console.error("Error adding product:", response.data);
         }
@@ -262,6 +236,8 @@ export default {
   },
 };
 </script>
+
+
 
 <style scoped>
 .just {
